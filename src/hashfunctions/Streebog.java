@@ -2,6 +2,7 @@ package hashfunctions;
 
 import statement.StateManager;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Arrays;
 import static utils.Computing.XOR;
 import static utils.StreebogConstants.*;
@@ -74,7 +75,7 @@ public final class Streebog extends HashFunction{
         long[] internalOut = new long[8];
 
         // Convert byte array to long array
-        ByteBuffer buffer = ByteBuffer.wrap(state);
+        ByteBuffer buffer = ByteBuffer.wrap(state).order(ByteOrder.LITTLE_ENDIAN);
         for (int i = 0; i < internalIn.length; i++) {
             internalIn[i] = buffer.getLong();
         }
@@ -90,7 +91,7 @@ public final class Streebog extends HashFunction{
         }
 
         // Convert back to byte array and copy to state
-        ByteBuffer outBuffer = ByteBuffer.wrap(state);
+        ByteBuffer outBuffer = ByteBuffer.wrap(state).order(ByteOrder.LITTLE_ENDIAN);
         for (long val : internalOut) {
             outBuffer.putLong(val);
         }
@@ -121,7 +122,7 @@ public final class Streebog extends HashFunction{
         byte[] internal = new byte[BLOCK_SIZE];
 
         addStep("XOR", "", this.h, N);
-        XOR(this.h, this.N, K);
+        XOR(this.h, N, K);
 
         nextStep("S", "", K);
         HashS(K);
