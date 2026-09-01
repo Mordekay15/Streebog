@@ -38,7 +38,7 @@ public enum Padding {
         if (this == _8OOOOO) {
             padIndex -= 1;
 //            if (data[padIndex] != (byte) 0x80) {
-//                throw new RuntimeException(String.format("Неожиданный байт %h в начале дополнения (padding) (%d)", data[padIndex], padIndex));
+//                throw new RuntimeException(String.format("Unexpected byte %h at the beginning of padding (%d)", data[padIndex], padIndex));
 //            }
         }
 

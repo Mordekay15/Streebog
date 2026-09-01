@@ -3,7 +3,7 @@ package visuals;
 import algorithms.*;
 import analysis.Analysis;
 import ciphers.CipherHolder;
-import org.apache.commons.math3.util.Pair;
+import java.util.AbstractMap;
 import utils.Conversions;
 import utils.Generation;
 import widgets.HexTextField;
@@ -50,34 +50,34 @@ public class InputDialogConstructorExpandMagmaKey {
         String algoName = algorithm.getName();
         switch (algoName) {
             case "ECB<Kuznyechik>":
-                algoName = "Режим простой замены шифра 'Кузнечик'";
+                algoName = "Electronic Codebook (ECB) Mode - Kuznyechik Cipher";
                 break;
             case "CBC<Kuznyechik>":
-                algoName = "Режим простой замены с зацеплением шифра 'Кузнечик'";
+                algoName = "Cipher Block Chaining (CBC) Mode - Kuznyechik Cipher";
                 break;
             case "CFB<Kuznyechik>":
-                algoName = "Режим гаммирования с обратной связью по шифртексту шифра 'Кузнечик'";
+                algoName = "Cipher Feedback (CFB) Mode - Kuznyechik Cipher";
                 break;
             case "CTR<Kuznyechik>":
-                algoName = "Режим гаммирования шифра 'Кузнечик'";
+                algoName = "Counter (CTR) Mode - Kuznyechik Cipher";
                 break;
             case "OFB<Kuznyechik>":
-                algoName = "Режим гаммирования с обратной связью по выходу шифра 'Кузнечик'";
+                algoName = "Output Feedback (OFB) Mode - Kuznyechik Cipher";
                 break;
             case "ECB<Magma>":
-                algoName = "Режим простой замены шифра 'Магма'";
+                algoName = "Electronic Codebook (ECB) Mode - Magma Cipher";
                 break;
             case "CBC<Magma>":
-                algoName = "Режим простой замены с зацеплением шифра 'Магма'";
+                algoName = "Cipher Block Chaining (CBC) Mode - Magma Cipher";
                 break;
             case "CFB<Magma>":
-                algoName = "Режим гаммирования с обратной связью по шифртексту шифра 'Магма'";
+                algoName = "Cipher Feedback (CFB) Mode - Magma Cipher";
                 break;
             case "CTR<Magma>":
-                algoName = "Режим гаммирования шифра 'Магма'";
+                algoName = "Counter (CTR) Mode - Magma Cipher";
                 break;
             case "OFB<Magma>":
-                algoName = "Режим гаммирования с обратной связью по выходу шифра 'Магма'";
+                algoName = "Output Feedback (OFB) Mode - Magma Cipher";
                 break;
         }
         Initializer init = showInputDialog(algoName, keySize, defaultPadding, defaultInitialVector, false, null);
@@ -88,30 +88,30 @@ public class InputDialogConstructorExpandMagmaKey {
         String name = cipher.getName();
         switch (name) {
             case "Kuznyechik":
-                name = "CMAC Кузнечик";
+                name = "CMAC Kuznyechik";
                 break;
             case "Magma":
-                name = "CMAC Магма";
+                name = "CMAC Magma";
                 break;
         }
         Initializer init = showInputDialog(name, cipher.getKeySize(), null, null, false, null);
         return init == null ? null : new MAC(cipher, Conversions.hex(init.key));
     }
 
-    public Pair<ECB, byte[]> visualizationDialog(CipherHolder cipher) {
+    public AbstractMap.SimpleEntry<ECB, byte[]> visualizationDialog(CipherHolder cipher) {
         String name = cipher.getName();
         switch (name) {
             case "Kuznyechik":
-                name = "Визуализация работы шифра 'Кузнечик'";
+                name = "Cipher Operation Visualization - Kuznyechik";
                 break;
             case "Magma":
-                name = "Визуализация работы шифра 'Магма'";
+                name = "Cipher Operation Visualization - Magma";
                 break;
         }
         byte[] data = new byte[cipher.getBlockSize()];
         Padding defaultPadding = ECB.defaultPadding;
         Initializer init = showInputDialog(name, cipher.getKeySize(), defaultPadding, null, false, data);
-        return init == null ? null : new Pair<>(ECB.withState(cipher, Conversions.hex(init.key), init.padding), data);
+        return init == null ? null : new AbstractMap.SimpleEntry<>(ECB.withState(cipher, Conversions.hex(init.key), init.padding), data);
     }
 
 
@@ -119,10 +119,10 @@ public class InputDialogConstructorExpandMagmaKey {
         String algoName = algorithm.getName();
         switch (algoName) {
             case "Kuznyechik":
-                algoName = "Анализ криптостойкости шифра 'Кузнечик'";
+                algoName = "Cryptographic Strength Analysis - Kuznyechik";
                 break;
             case "Magma":
-                algoName = "Анализ криптостойкости шифра 'Магма'";
+                algoName = "Cryptographic Strength Analysis - Magma";
                 break;
         }
         int keySize = algorithm.getCipherHolder().getKeySize();
@@ -142,23 +142,23 @@ public class InputDialogConstructorExpandMagmaKey {
         JComboBox<Padding> padding = new JComboBox<>(new Padding[]{Padding._OOOOOO, Padding._8OOOOO});
         HexTextField dataInput = new HexTextField(false);
 
-        List<JComponent> inputs = new ArrayList<>(List.of(new JLabel("Секретный ключ"), key));
+        List<JComponent> inputs = new ArrayList<>(List.of(new JLabel("Secret key"), key));
 
         if (defaultPadding != null) {
-//            inputs.add(new JLabel("Способ дополнения"));
+//            inputs.add(new JLabel("Padding method"));
             padding.setSelectedItem(defaultPadding);
 //            inputs.add(padding);
         }
 
         if (defaultInitialVector != null) {
-//            inputs.add(new JLabel("Синхропосылка"));
+//            inputs.add(new JLabel("Initialization vector"));
             initialVector.setBytesLength(defaultInitialVector.length);
             initialVector.setText(Conversions.hex(defaultInitialVector));
 //            inputs.add(initialVector);
         }
 
         if (data != null) {
-//            inputs.add(new JLabel(String.format("Блок данных (%s байт)", data.length)));
+//            inputs.add(new JLabel(String.format("Data block (%s bytes)", data.length)));
             dataInput.setBytesLength(data.length);
             dataInput.setText(Conversions.hex(Generation.randomBytes(data.length)));
 //            inputs.add(dataInput);
@@ -168,12 +168,12 @@ public class InputDialogConstructorExpandMagmaKey {
         if (result == JOptionPane.OK_OPTION) {
             String resultKey = key.getText();
             if (resultKey.split(" ").length != keyLength) {
-                JOptionPane.showMessageDialog(parent, String.format("Секретный ключ должен быть длиной %d байт", keyLength), "Неверные данные", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(parent, String.format("The secret key must be %d bytes long", keyLength), "Invalid input", JOptionPane.WARNING_MESSAGE);
                 return null;
             }
             byte[] resultInitialVector = defaultInitialVector == null ? null : initialVector.getBytes();
             if (resultInitialVector != null && resultInitialVector.length != defaultInitialVector.length) {
-                JOptionPane.showMessageDialog(parent, String.format("Начальный вектор инициализации должен быть длиной %d байт", defaultInitialVector.length), "Неверные данные", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(parent, String.format("The initialization vector must be %d bytes long", defaultInitialVector.length), "Invalid input", JOptionPane.WARNING_MESSAGE);
                 return null;
             }
             Padding resultPadding = defaultPadding == null ? null : (Padding) padding.getSelectedItem();

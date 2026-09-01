@@ -102,10 +102,10 @@ public class VisualizationExpandKey extends JDialog {
     private final Color colorViz = Color.getHSBColor(0.33f, 0.058f, 1.f);
 
 
-    private final JLabel stageFeistel = new JLabel("№ итерации развертывания ключа 1", SwingConstants.CENTER);
+    private final JLabel stageFeistel = new JLabel("Key expansion round 1", SwingConstants.CENTER);
 
     public VisualizationExpandKey(Component owner, State state, byte[] result, String key, byte[] algorithmKey) {
-        super((Frame) SwingUtilities.getWindowAncestor(owner), "Визуализация развертывания ключа шифра 'Кузнечик'", false);
+        super((Frame) SwingUtilities.getWindowAncestor(owner), "Key Expansion Visualization - Kuznyechik Cipher", false);
         Font font = new Font("Arial", Font.BOLD, fontSize);
         stateList = createStateList(state);
         prevRound.setEnabled(false);
@@ -311,7 +311,7 @@ public class VisualizationExpandKey extends JDialog {
     }
 
     private void visualizeSwapKeyPartOne() {
-        // Визуализация маршрута первого субблока
+        // Animation of the first subblock moving through the round
         Font font = new Font("Arial", Font.BOLD, fontSize);
         textPaneViz21.setFont(font);
         textPaneViz13.setFont(font);
@@ -354,7 +354,7 @@ public class VisualizationExpandKey extends JDialog {
                 sleep(ms);
 
                 textPaneViz15.setText(null);
-                insertColorText(textPaneAfterL, styleBlue, "Субблок L'\n");
+                insertColorText(textPaneAfterL, styleBlue, "Subblock L'\n");
                 insertColorText(textPaneAfterL, styleBlack, roundKey1);
                 textPaneViz15.setText(null);
                 sleep(ms);
@@ -372,7 +372,7 @@ public class VisualizationExpandKey extends JDialog {
                 sleep(ms);
 
 
-                textPaneViz24.setText(textL); // Остановка перед L
+                textPaneViz24.setText(textL); // result after L
                 textPaneViz23.setText(null);
                 sleep(ms - 700);
 
@@ -400,15 +400,15 @@ public class VisualizationExpandKey extends JDialog {
                 nextStep.setEnabled(false);
 
                 textPaneXORResult.setText(null);
-                textPaneXORResult.setText("Вычисление.");
+                textPaneXORResult.setText("Computing.");
                 sleep(ms);
-                textPaneXORResult.setText("Вычисление..");
+                textPaneXORResult.setText("Computing..");
                 sleep(ms);
-                textPaneXORResult.setText("Вычисление...");
+                textPaneXORResult.setText("Computing...");
                 sleep(ms);
                 textPaneXORResult.setText(null);
 
-                insertColorText(textPaneXORResult, styleBlue, "Преобразование: 'сложение XOR'\n");
+                insertColorText(textPaneXORResult, styleBlue, "Transformation: 'XOR operation'\n");
                 insertColorText(textPaneXORResult, styleBlack, dataXOR);
 //                textPaneXORResult.setText(dataXOR);
                 textPaneViz25.setText(dataXOR);
@@ -416,17 +416,17 @@ public class VisualizationExpandKey extends JDialog {
 
                 sleep(ms + 300);
 
-                insertColorText(textPaneAfterR, styleBlue, "Субблок R'\n");
+                insertColorText(textPaneAfterR, styleBlue, "Subblock R'\n");
                 insertColorText(textPaneAfterR, styleBlack, dataXOR);
                 textPaneViz25.setText(null);
 
                 sleep(ms);
                 textPaneIterKeyL.setText(null);
-                insertColorText(textPaneIterKeyL, styleBlue, "Субблок L\n");
+                insertColorText(textPaneIterKeyL, styleBlue, "Subblock L\n");
                 insertColorText(textPaneIterKeyL, styleBlack, roundKey1);
 
                 textPaneIterKeyR.setText(null);
-                insertColorText(textPaneIterKeyR, styleBlue, "Субблок R\n");
+                insertColorText(textPaneIterKeyR, styleBlue, "Subblock R\n");
                 insertColorText(textPaneIterKeyR, styleBlack, dataXOR);
 
                 nextStep.setEnabled(true);
@@ -457,30 +457,30 @@ public class VisualizationExpandKey extends JDialog {
         textPaneBeforeR.setText(null);
         textPaneAfterL.setText(null);
         textPaneAfterR.setText(null);
-//        stage.setText("Раунд №"+(roundIdx+1));
+//        stage.setText("Round #"+(roundIdx+1));
         Style styleRed = getStyleText(textPaneRoundKey, Color.RED);
         Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
         Style styleBlue = getStyleText(textPaneIterKeyR, Color.BLUE);
-        insertColorText(textPaneRoundKey, styleRed, "Секретный ключ:\n");
+        insertColorText(textPaneRoundKey, styleRed, "Secret key:\n");
         insertColorText(textPaneRoundKey, styleBlack, String.valueOf(key));
-        insertColorText(textPaneBeforeL, styleRed, "Раундовый ключ 1\n");
+        insertColorText(textPaneBeforeL, styleRed, "Round key 1\n");
         insertColorText(textPaneBeforeL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0, 47));
 //        insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0, 47));
-        insertColorText(textPaneBeforeR, styleRed, "Раундовый ключ 2\n");
+        insertColorText(textPaneBeforeR, styleRed, "Round key 2\n");
         insertColorText(textPaneBeforeR, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(48, 95));
 //        insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95));
 
         textPaneIterKeyL.setText(null);
-        insertColorText(textPaneIterKeyL, styleBlue, "Субблок L\n");
+        insertColorText(textPaneIterKeyL, styleBlue, "Subblock L\n");
         insertColorText(textPaneIterKeyL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0, 47));
 
         textPaneIterKeyR.setText(null);
-        insertColorText(textPaneIterKeyR, styleBlue, "Субблок R\n");
+        insertColorText(textPaneIterKeyR, styleBlue, "Subblock R\n");
         insertColorText(textPaneIterKeyR, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(48, 95));
 //        JOptionPane.showMessageDialog(
 //                VisualizationExpandKey.this,
-//                new String[]{"Уведомление, что нужно кликнуть 3 раза"},
-//                "Уведомление о кликах",
+//                new String[]{"Note that this step is repeated 3 times"},
+//                "Operation notice",
 //                JOptionPane.INFORMATION_MESSAGE);
         tree.setSelectionPath(findTreePath(current));
 
@@ -531,10 +531,10 @@ public class VisualizationExpandKey extends JDialog {
         }
         JOptionPane.showMessageDialog(
                 VisualizationExpandKey.this,
-                new String[]{"Описание...",
+                new String[]{"Loading...",
                         "",
                         ""},
-                "Перемещение субблоков",
+                "Graphical hint",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -554,13 +554,13 @@ public class VisualizationExpandKey extends JDialog {
         }
         JOptionPane.showMessageDialog(
                 VisualizationExpandKey.this,
-                new String[]{"Раундовые ключи получаются путем определенных преобразований на основе мастер-ключа.",
-                        "Процесс начинается с разбиения мастер-ключа пополам, так получается первая пара раундовых ключей.",
+                new String[]{"The round keys are derived from the secret key using a Feistel network.",
+                        "Each pair of round keys is produced by eight Feistel rounds applied to the previous pair.",
                         " ",
-                        "Для генерации каждой последующей пары раундовых ключей применяется 8 итераций сети Фейстеля,",
-                        "в каждой итерации используется константа, которая вычисляется путем применения линейного преобразоваия алгоритма к значению номера итерации",
+                        "Eight round constants are generated for every pair of round keys,",
+                        "each constant being the round number passed through the linear transform L, and it is XORed with one subblock before the S-box and L are applied",
                         ""},
-                "Развертывания ключей",
+                "Key expansion",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -599,23 +599,23 @@ public class VisualizationExpandKey extends JDialog {
 //                textPaneConstant.setText(null);
 //                Style styleBlue = getStyleText(textPaneConstant, Color.BLUE);
 //                Style styleBlack = getStyleText(textPaneConstant, Color.BLACK);
-//                insertColorText(textPaneConstant, styleBlue, "Формирование ключа итерации:\n\n");
+//                insertColorText(textPaneConstant, styleBlue, "Round constant:\n\n");
 //                insertColorText(textPaneConstant, styleBlack, String.valueOf(Conversions.hex(current.getAfter())));
 //                textConstant = String.valueOf(Conversions.hex(current.getAfter()));
 //                System.out.println("DEBUG jtextpane: "+textPaneBeforeL.getText());
 
-//                insertColorText(textPaneConstant, styleRed_, "\n\nДанные до");
+//                insertColorText(textPaneConstant, styleRed_, "\n\nBefore:");
 //                insertColorText(textPaneConstant, styleRed_, String.valueOf(Conversions.hex(current.getBefore())));
-//                insertColorText(textPaneConstant, styleRed_, "\n\nДоп. данные:");
+//                insertColorText(textPaneConstant, styleRed_, "\n\nExtra data:");
 //                insertColorText(textPaneConstant, styleRed_, String.valueOf((Arrays.toString(current.getAdditional()))));
 //                System.out.println(
-//                                "\nВычисление константы:\n\n"+
-//                                "Данные до:\n"+String.valueOf(Conversions.hex(current.getBefore()))+
-//                                "\n\nДоп.данные:\n"+String.valueOf((Arrays.toString(current.getAdditional()))));
+//                                "\nConstant computing:\n\n"+
+//                                "Before:\n"+String.valueOf(Conversions.hex(current.getBefore()))+
+//                                "\n\nExtra data:\n"+String.valueOf((Arrays.toString(current.getAdditional()))));
 //                System.out.println("\n\n\n--------------------------\n\n\n");
                 cComputingIdx++;
             } else if (current.getName().equals("Feistel round " + roundFeistel)) {
-                stageFeistel.setText("№ итерации развертывания ключа " + (roundFeistelCounter));
+                stageFeistel.setText("Key expansion round " + (roundFeistelCounter));
                 roundFeistel++;
                 roundFeistelCounter++;
                 textPaneAfterL.setText(null);
@@ -630,12 +630,12 @@ public class VisualizationExpandKey extends JDialog {
 //                textPaneAfterR.setText(null);
 //                Style styleRed = getStyleText(textPaneRoundKey, Color.RED);
 //                Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
-//                insertColorText(textPaneRoundKey, styleRed, "Секретный ключ:\n\n");
+//                insertColorText(textPaneRoundKey, styleRed, "Secret key:\n\n");
 //                insertColorText(textPaneRoundKey, styleBlack, String.valueOf(key));
-//                insertColorText(textPaneBeforeL, styleRed, "Раундовый ключ "+String.valueOf(roundIdx)+"\n\n");
+//                insertColorText(textPaneBeforeL, styleRed, "Round key "+String.valueOf(roundIdx)+"\n\n");
 //                insertColorText(textPaneBeforeL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0,47));
 //                insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0,47));
-//                insertColorText(textPaneBeforeR, styleRed, "Раундовый ключ "+String.valueOf(roundIdx+1)+"\n\n");
+//                insertColorText(textPaneBeforeR, styleRed, "Round key "+String.valueOf(roundIdx+1)+"\n\n");
 //                insertColorText(textPaneBeforeR, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(48,95));
 //                insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48,95));
 
@@ -656,35 +656,35 @@ public class VisualizationExpandKey extends JDialog {
                 textPaneBeforeR.setText(null);
                 Style styleRed = getStyleText(textPaneRoundKey, Color.RED);
                 Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
-                insertColorText(textPaneBeforeL, styleRed, "Раундовый ключ " + keyIdx + "\n");
+                insertColorText(textPaneBeforeL, styleRed, "Round key " + keyIdx + "\n");
                 insertColorText(textPaneBeforeL, styleBlack, roundKey2);
-                insertColorText(textPaneBeforeR, styleRed, "Раундовый ключ " + (keyIdx + 1) + "\n");
+                insertColorText(textPaneBeforeR, styleRed, "Round key " + (keyIdx + 1) + "\n");
                 insertColorText(textPaneBeforeR, styleBlack, roundKey1);
 
                 Style styleBlue = getStyleText(textPaneXORConstant, Color.BLUE);
 //                Style styleBlack = getStyleText(textPaneXORConstant, Color.BLACK);
 
-                insertColorText(textPaneXORConstant, styleBlue, "Преобразование: 'сложение XOR'\n");
+                insertColorText(textPaneXORConstant, styleBlue, "Transformation: 'XOR operation'\n");
                 insertColorText(textPaneXORConstant, styleBlack, String.valueOf(Conversions.hex(current.getAfter())));
 
                 textPaneConstant.setText(null);
-                insertColorText(textPaneConstant, styleBlue, "Формирование ключа итерации:\n");
+                insertColorText(textPaneConstant, styleBlue, "Round constant:\n");
                 insertColorText(textPaneConstant, styleBlack, String.valueOf(Conversions.hex(current.getAdditional())));
 
                 textXORConstant = String.valueOf(Conversions.hex(current.getAfter()));
 
 //                System.out.println(
 //                                "XOR with constant:\n\n"+
-//                                "Данные до:\n"+String.valueOf(Conversions.hex(current.getBefore()))+
-//                                "\n\nДоп.данные:\n"+String.valueOf(Conversions.hex(current.getAdditional())));
+//                                "Before:\n"+String.valueOf(Conversions.hex(current.getBefore()))+
+//                                "\n\nExtra data:\n"+String.valueOf(Conversions.hex(current.getAdditional())));
 //                System.out.println("\n\n\n--------------------------\n\n\n");
 
-//                insertColorText(textPaneXORConstant, styleRed_, "\n\nДанные до");
+//                insertColorText(textPaneXORConstant, styleRed_, "\n\nBefore:");
 //                insertColorText(textPaneXORConstant, styleRed_, String.valueOf(Conversions.hex(current.getBefore())));
-//                insertColorText(textPaneXORConstant, styleRed_, "\n\nДоп.данные:");
+//                insertColorText(textPaneXORConstant, styleRed_, "\n\nExtra data:");
 //                insertColorText(textPaneXORConstant, styleRed_, String.valueOf(Conversions.hex(current.getAdditional())));
 
-//                insertColorText(textPaneXORConstant, styleBlue, "\n\nС чем производится XOR:");
+//                insertColorText(textPaneXORConstant, styleBlue, "\n\nXORed with:");
 //                insertColorText(textPaneXORConstant, styleBlack, String.valueOf(Conversions.hex(current.getAdditional())));
                 xorConstantIdx++;
             } else if (current.getName().equals("Substitute bytes " + sIdx)) {
@@ -692,20 +692,20 @@ public class VisualizationExpandKey extends JDialog {
                 textPaneS.setText(null);
                 Style styleBlue = getStyleText(textPaneS, Color.BLUE);
                 Style styleBlack = getStyleText(textPaneXORConstant, Color.BLACK);
-                insertColorText(textPaneS, styleBlue, "Преобразование: 'подстановка S'\n");
+                insertColorText(textPaneS, styleBlue, "Transformation: 'S-box substitution'\n");
                 insertColorText(textPaneS, styleBlack, String.valueOf(Conversions.hex(current.getAfter())));
                 textS = String.valueOf(Conversions.hex(current.getAfter()));
 
-//                insertColorText(textPaneS, styleRed_, "\n\nДанные до");
+//                insertColorText(textPaneS, styleRed_, "\n\nBefore:");
 //                insertColorText(textPaneS, styleRed_, String.valueOf(Conversions.hex(current.getBefore())));
-//                insertColorText(textPaneS, styleRed_, "\n\nДоп. данные:");
+//                insertColorText(textPaneS, styleRed_, "\n\nExtra data:");
 //                insertColorText(textPaneS, styleRed_, Arrays.toString(current.getAdditional()));
                 sIdx++;
 
 //                System.out.println(
 //                                "S:\n\n"+
-//                                "Данные до:\n"+String.valueOf(Conversions.hex(current.getBefore()))+
-//                                "\n\nДоп.данные:\n"+"null");
+//                                "Before:\n"+String.valueOf(Conversions.hex(current.getBefore()))+
+//                                "\n\nExtra data:\n"+"null");
 //                System.out.println("\n\n\n--------------------------\n\n\n");
 
             } else if (current.getName().equals("Rotate bytes " + lIdx)) {
@@ -714,7 +714,7 @@ public class VisualizationExpandKey extends JDialog {
 //                textPaneRotate.setText(null);
                 Style styleBlue = getStyleText(textPaneL, Color.BLUE);
                 Style styleBlack = getStyleText(textPaneL, Color.BLACK);
-                insertColorText(textPaneL, styleBlue, "Преобразование: 'регистр сдвига L'\n");
+                insertColorText(textPaneL, styleBlue, "Transformation: 'Shift register L'\n");
                 insertColorText(textPaneL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())));
                 textL = String.valueOf(Conversions.hex(current.getAfter()));
 
@@ -724,12 +724,12 @@ public class VisualizationExpandKey extends JDialog {
                 }
 
 
-//                insertColorText(textPaneL, styleRed_, "\n\nДанные до");
+//                insertColorText(textPaneL, styleRed_, "\n\nBefore:");
 //                insertColorText(textPaneL, styleRed_, String.valueOf(Conversions.hex(current.getBefore())));
-//                insertColorText(textPaneL, styleRed_, "\n\nДоп. данные:");
+//                insertColorText(textPaneL, styleRed_, "\n\nExtra data:");
 //                insertColorText(textPaneL, styleRed_, Arrays.toString(current.getAdditional()));
 
-//                insertColorText(textPaneRotate, styleBlue, "Преобразование R:\n\n");
+//                insertColorText(textPaneRotate, styleBlue, "Transformation R:\n\n");
 //                insertColorText(textPaneRotate, styleBlack, String.valueOf(Conversions.hex(current.getBefore())));
                 lIdx++;
             } else if (current.getName().equals("XOR key 1 with result " + xorResultIdx)) {
@@ -737,59 +737,59 @@ public class VisualizationExpandKey extends JDialog {
                 textPaneXORResult.setText(null);
                 Style styleBlue = getStyleText(textPaneXORResult, Color.BLUE);
                 Style styleBlack = getStyleText(textPaneXORResult, Color.BLACK);
-//                insertColorText(textPaneXORResult, styleBlue, "Преобразование: Сложение XOR\n\n");
+//                insertColorText(textPaneXORResult, styleBlue, "Transformation: XOR operation\n\n");
 //                insertColorText(textPaneXORResult, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95));
 //                textXORResult = String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95);
 
-//                insertColorText(textPaneXORResult, styleRed_, "\n\nДанные до");
+//                insertColorText(textPaneXORResult, styleRed_, "\n\nBefore:");
 //                insertColorText(textPaneXORResult, styleRed_, String.valueOf(Conversions.hex(current.getBefore())));
-//                insertColorText(textPaneXORResult, styleRed_, "\n\nДоп.данные:");
+//                insertColorText(textPaneXORResult, styleRed_, "\n\nExtra data:");
 //                insertColorText(textPaneXORResult, styleRed_, String.valueOf(Conversions.hex(current.getAdditional())));
-//                insertColorText(textPaneXORResult, styleBlue, "Преобразование: Сложение XOR\n\n");
+//                insertColorText(textPaneXORResult, styleBlue, "Transformation: XOR operation\n\n");
 //                insertColorText(textPaneXORResult, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95));
 
 //                System.out.println(
 //                                "XOR with result:\n\n"+
-//                                "Данные до:\n"+String.valueOf(Conversions.hex(current.getBefore()))+
-//                                "\n\nДоп.данные:\n"+String.valueOf(Conversions.hex(current.getAdditional())));
+//                                "Before:\n"+String.valueOf(Conversions.hex(current.getBefore()))+
+//                                "\n\nExtra data:\n"+String.valueOf(Conversions.hex(current.getAdditional())));
 //                System.out.println("\n\n\n--------------------------\n\n\n");
 //                textXORResult = String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95);
 
                 if (isNumberInArray(id, indexDropSubblocksSecond)) {
                     visualizeSwapKeyPartTwo(String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95));
-//                    insertColorText(textPaneXORResult, styleBlue, "Преобразование: Сложение XOR\n\n");
+//                    insertColorText(textPaneXORResult, styleBlue, "Transformation: XOR operation\n\n");
 //                    insertColorText(textPaneXORResult, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95));
                     textXORResult = String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95);
 //                    checkDoubleClickPartTwo += 1;
 
 //                    textPaneIterKeyL.setText(null);
 //                    textPaneIterKeyR.setText(null);
-//                    insertColorText(textPaneIterKeyL, styleBlue, "Субблок L\n\n");
+//                    insertColorText(textPaneIterKeyL, styleBlue, "Subblock L\n\n");
 //                    insertColorText(textPaneIterKeyL, styleBlack, textPaneAfterL.getText());
 //
-//                    insertColorText(textPaneIterKeyR, styleBlue, "Субблок R\n\n");
+//                    insertColorText(textPaneIterKeyR, styleBlue, "Subblock R\n\n");
 //                    insertColorText(textPaneIterKeyR, styleBlack, textPaneAfterR.getText());
 
 
 //                    textPaneAfterL.setText(null);
 //                    textPaneAfterR.setText(null);
                 } else {
-                    insertColorText(textPaneXORResult, styleBlue, "Преобразование: 'сложение XOR'\n");
+                    insertColorText(textPaneXORResult, styleBlue, "Transformation: 'XOR operation'\n");
                     insertColorText(textPaneXORResult, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95));
                     textXORResult = String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95);
 
                     textPaneIterKeyL.setText(null);
-                    insertColorText(textPaneIterKeyL, styleBlue, "Субблок L\n");
+                    insertColorText(textPaneIterKeyL, styleBlue, "Subblock L\n");
                     insertColorText(textPaneIterKeyL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0, 47));
 
                     textPaneIterKeyR.setText(null);
-                    insertColorText(textPaneIterKeyR, styleBlue, "Субблок R\n");
+                    insertColorText(textPaneIterKeyR, styleBlue, "Subblock R\n");
                     insertColorText(textPaneIterKeyR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95));
 
                 }
 
 
-//                insertColorText(textPaneXORResult, styleBlue, "\n\nС чем производится XOR:");
+//                insertColorText(textPaneXORResult, styleBlue, "\n\nXORed with:");
 //                insertColorText(textPaneXORResult, styleBlack, String.valueOf(Conversions.hex(current.getAdditional())));
                 xorResultIdx++;
             }
@@ -800,7 +800,7 @@ public class VisualizationExpandKey extends JDialog {
 //
 //                Style styleBlue = getStyleText(textPaneSwap, Color.BLUE);
 //                Style styleBlack = getStyleText(textPaneSwap, Color.BLACK);
-//                insertColorText(textPaneSwap, styleBlue, "Преобразование Swap:\n\n");
+//                insertColorText(textPaneSwap, styleBlue, "Transformation Swap:\n\n");
 //                insertColorText(textPaneSwap, styleBlack, String.valueOf(Conversions.hex(current.getAfter())));
 //                swapIdx++;
 //
@@ -809,7 +809,7 @@ public class VisualizationExpandKey extends JDialog {
 
             if (current.getName().equals("Round key parts 0 and 1")) {
 //                System.out.println("DEBUG id: " + id);
-//                stage.setText("Раунд №1");
+//                stage.setText("Round #1");
                 if (roundIdx == 0) {
                     roundIdx += 2;
                     roundArrIdx++;
@@ -821,12 +821,12 @@ public class VisualizationExpandKey extends JDialog {
                 textPaneAfterR.setText(null);
                 Style styleRed = getStyleText(textPaneRoundKey, Color.RED);
                 Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
-                insertColorText(textPaneRoundKey, styleRed, "Секретный ключ:\n");
+                insertColorText(textPaneRoundKey, styleRed, "Secret key:\n");
                 insertColorText(textPaneRoundKey, styleBlack, String.valueOf(key));
-                insertColorText(textPaneBeforeL, styleRed, "Раундовый ключ 1\n");
+                insertColorText(textPaneBeforeL, styleRed, "Round key 1\n");
                 insertColorText(textPaneBeforeL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0, 47));
                 insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0, 47));
-                insertColorText(textPaneBeforeR, styleRed, "Раундовый ключ 2\n");
+                insertColorText(textPaneBeforeR, styleRed, "Round key 2\n");
                 insertColorText(textPaneBeforeR, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(48, 95));
                 insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95));
 
@@ -850,18 +850,18 @@ public class VisualizationExpandKey extends JDialog {
                 textPaneAfterR.setText(null);
                 Style styleRed = getStyleText(textPaneRoundKey, Color.RED);
                 Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
-                insertColorText(textPaneRoundKey, styleRed, "Секретный ключ:\n");
+                insertColorText(textPaneRoundKey, styleRed, "Secret key:\n");
                 insertColorText(textPaneRoundKey, styleBlack, String.valueOf(key));
-                insertColorText(textPaneBeforeL, styleRed, "Раундовый ключ " + roundIdx + "\n");
+                insertColorText(textPaneBeforeL, styleRed, "Round key " + roundIdx + "\n");
                 insertColorText(textPaneBeforeL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0, 47));
                 insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0, 47));
-                insertColorText(textPaneBeforeR, styleRed, "Раундовый ключ " + (roundIdx + 1) + "\n");
+                insertColorText(textPaneBeforeR, styleRed, "Round key " + (roundIdx + 1) + "\n");
                 insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95));
 
 //                JOptionPane.showMessageDialog(
 //                        VisualizationExpandKey.this,
-//                        new String[]{"Уведомление, что нужно кликнуть 3 раза"},
-//                        "Уведомление о кликах",
+//                        new String[]{"Note that this step is repeated 3 times"},
+//                        "Operation notice",
 //                        JOptionPane.INFORMATION_MESSAGE);
 
             }
@@ -874,15 +874,15 @@ public class VisualizationExpandKey extends JDialog {
                 Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
 //                insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0, 47));
                 if (id == 196) {
-                    insertColorText(textPaneAfterL, styleRed, "Раундовый ключ 10\n");
+                    insertColorText(textPaneAfterL, styleRed, "Round key 10\n");
                     insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0, 47));
-                    insertColorText(textPaneAfterR, styleRed, "Раундовый ключ 9\n");
+                    insertColorText(textPaneAfterR, styleRed, "Round key 9\n");
                     insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95));
                 }
                 else{
-                    insertColorText(textPaneAfterL, styleBlue, "Субблок L'\n");
+                    insertColorText(textPaneAfterL, styleBlue, "Subblock L'\n");
                     insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0, 47));
-                    insertColorText(textPaneAfterR, styleBlue, "Субблок R'\n");
+                    insertColorText(textPaneAfterR, styleBlue, "Subblock R'\n");
                     insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95));
                 }
 
@@ -912,13 +912,13 @@ public class VisualizationExpandKey extends JDialog {
 //
 //                Style styleBlue = getStyleText(textPaneConstant, Color.BLUE);
 //                Style styleBlack = getStyleText(textPaneConstant, Color.BLACK);
-//                insertColorText(textPaneConstant, styleBlue, "Результат вычисления константы\n\n");
+//                insertColorText(textPaneConstant, styleBlue, "Result of the constant computation\n\n");
 //                insertColorText(textPaneConstant, styleBlack, String.valueOf(Conversions.hex(current.getAfter())));
 //
 //                cComputingIdx--;
 //            }
 //            else if (current.getName().equals("Feistel round " + (roundFeistel-2)) | current.getName().equals("Feistel round " + (roundFeistel-1))){
-//                stageFeistel.setText("№ итерации развертывания ключа "+(roundFeistel-1));
+//                stageFeistel.setText("Key expansion round "+(roundFeistel-1));
 //
 ////                textPaneRoundKey.setText(null);
 ////                textPaneBeforeL.setText(null);
@@ -927,12 +927,12 @@ public class VisualizationExpandKey extends JDialog {
 ////                textPaneAfterR.setText(null);
 ////                Style styleRed = getStyleText(textPaneRoundKey, Color.RED);
 ////                Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
-////                insertColorText(textPaneRoundKey, styleRed, "Секретный ключ:\n\n");
+////                insertColorText(textPaneRoundKey, styleRed, "Secret key:\n\n");
 ////                insertColorText(textPaneRoundKey, styleBlack, String.valueOf(key));
-////                insertColorText(textPaneBeforeL, styleRed, "Раундовый ключ "+String.valueOf(roundIdx)+"\n\n");
+////                insertColorText(textPaneBeforeL, styleRed, "Round key "+String.valueOf(roundIdx)+"\n\n");
 ////                insertColorText(textPaneBeforeL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0,47));
 ////                insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0,47));
-////                insertColorText(textPaneBeforeR, styleRed, "Раундовый ключ "+String.valueOf(roundIdx+1)+"\n\n");
+////                insertColorText(textPaneBeforeR, styleRed, "Round key "+String.valueOf(roundIdx+1)+"\n\n");
 ////                insertColorText(textPaneBeforeR, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(48,95));
 ////                insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48,95));
 //
@@ -944,9 +944,9 @@ public class VisualizationExpandKey extends JDialog {
 //                textPaneXORConstant.setText(null);
 //                Style styleBlue = getStyleText(textPaneXORConstant, Color.BLUE);
 //                Style styleBlack = getStyleText(textPaneXORConstant, Color.BLACK);
-//                insertColorText(textPaneXORConstant, styleBlue, "Результат X:\n\n");
+//                insertColorText(textPaneXORConstant, styleBlue, "Result of X:\n\n");
 //                insertColorText(textPaneXORConstant, styleBlack, String.valueOf(Conversions.hex(current.getAfter())));
-////                insertColorText(textPaneXORConstant, styleBlue, "\n\nС чем производится XOR:\n\n");
+////                insertColorText(textPaneXORConstant, styleBlue, "\n\nXORed with:\n\n");
 ////                insertColorText(textPaneXORConstant, styleBlack, String.valueOf(Conversions.hex(current.getAdditional())));
 //                xorConstantIdx--;
 //            }
@@ -955,7 +955,7 @@ public class VisualizationExpandKey extends JDialog {
 //                textPaneS.setText(null);
 //                Style styleBlue = getStyleText(textPaneS, Color.BLUE);
 //                Style styleBlack = getStyleText(textPaneS, Color.BLACK);
-//                insertColorText(textPaneS, styleBlue, "Результат S:\n\n");
+//                insertColorText(textPaneS, styleBlue, "Result of S:\n\n");
 //                insertColorText(textPaneS, styleBlack, String.valueOf(Conversions.hex(current.getAfter())));
 //                sIdx--;
 //
@@ -966,10 +966,10 @@ public class VisualizationExpandKey extends JDialog {
 ////                textPaneRotate.setText(null);
 //                Style styleBlue = getStyleText(textPaneL, Color.BLUE);
 //                Style styleBlack = getStyleText(textPaneL, Color.BLACK);
-//                insertColorText(textPaneL, styleBlue, "Результат L:\n\n");
+//                insertColorText(textPaneL, styleBlue, "Result of L:\n\n");
 //                insertColorText(textPaneL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())));
 //
-////                insertColorText(textPaneRotate, styleBlue, "Результат R:\n\n");
+////                insertColorText(textPaneRotate, styleBlue, "Result of R:\n\n");
 ////                insertColorText(textPaneRotate, styleBlack, String.valueOf(Conversions.hex(current.getBefore())));
 //                lIdx--;
 //            }
@@ -978,9 +978,9 @@ public class VisualizationExpandKey extends JDialog {
 //                textPaneXORResult.setText(null);
 //                Style styleBlue = getStyleText(textPaneXORResult, Color.BLUE);
 //                Style styleBlack = getStyleText(textPaneXORResult, Color.BLACK);
-//                insertColorText(textPaneXORResult, styleBlue, "Результат X:\n\n");
+//                insertColorText(textPaneXORResult, styleBlue, "Result of X:\n\n");
 //                insertColorText(textPaneXORResult, styleBlack, String.valueOf(Conversions.hex(current.getAfter())));
-////                insertColorText(textPaneXORResult, styleBlue, "\n\nС чем производится XOR:\n\n");
+////                insertColorText(textPaneXORResult, styleBlue, "\n\nXORed with:\n\n");
 ////                insertColorText(textPaneXORResult, styleBlack, String.valueOf(Conversions.hex(current.getAdditional())));
 //                xorResultIdx--;
 //            }
@@ -990,7 +990,7 @@ public class VisualizationExpandKey extends JDialog {
 ////
 ////                Style styleBlue = getStyleText(textPaneSwap, Color.BLUE);
 ////                Style styleBlack = getStyleText(textPaneSwap, Color.BLACK);
-////                insertColorText(textPaneSwap, styleBlue, "Результат Swap:\n\n");
+////                insertColorText(textPaneSwap, styleBlue, "Result of Swap:\n\n");
 ////                insertColorText(textPaneSwap, styleBlack, String.valueOf(Conversions.hex(current.getAfter())));
 ////                swapIdx--;
 ////            }
@@ -998,7 +998,7 @@ public class VisualizationExpandKey extends JDialog {
 //            if (current.getName().equals("Round key parts 0 and 1")){
 //                System.out.println("DEBUG id: "+ id);
 //                prevRound.setEnabled(false);
-////                stage.setText("Раунд №1");
+////                stage.setText("Round #1");
 //                if (roundIdx == 0){
 //                    roundIdx -= 2;
 //                    xorResultIdx = roundIdx-3;
@@ -1014,12 +1014,12 @@ public class VisualizationExpandKey extends JDialog {
 //                textPaneAfterR.setText(null);
 //                Style styleRed = getStyleText(textPaneRoundKey, Color.RED);
 //                Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
-//                insertColorText(textPaneRoundKey, styleRed, "Секретный ключ:\n\n");
+//                insertColorText(textPaneRoundKey, styleRed, "Secret key:\n\n");
 //                insertColorText(textPaneRoundKey, styleBlack, String.valueOf(key));
-//                insertColorText(textPaneBeforeL, styleRed, "Раундовый ключ 1\n\n");
+//                insertColorText(textPaneBeforeL, styleRed, "Round key 1\n\n");
 //                insertColorText(textPaneBeforeL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0,47));
 //                insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0,47));
-//                insertColorText(textPaneBeforeR, styleRed, "Раундовый ключ 2\n\n");
+//                insertColorText(textPaneBeforeR, styleRed, "Round key 2\n\n");
 //                insertColorText(textPaneBeforeR, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(48,95));
 //                insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48,95));
 //            }
@@ -1041,12 +1041,12 @@ public class VisualizationExpandKey extends JDialog {
 //                textPaneAfterR.setText(null);
 //                Style styleRed = getStyleText(textPaneRoundKey, Color.RED);
 //                Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
-//                insertColorText(textPaneRoundKey, styleRed, "Секретный ключ:\n\n");
+//                insertColorText(textPaneRoundKey, styleRed, "Secret key:\n\n");
 //                insertColorText(textPaneRoundKey, styleBlack, String.valueOf(key));
-//                insertColorText(textPaneBeforeL, styleRed, "Раундовый ключ "+String.valueOf(roundIdx)+"\n\n");
+//                insertColorText(textPaneBeforeL, styleRed, "Round key "+String.valueOf(roundIdx)+"\n\n");
 //                insertColorText(textPaneBeforeL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0,47));
 //                insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0,47));
-//                insertColorText(textPaneBeforeR, styleRed, "Раундовый ключ "+String.valueOf(roundIdx+1)+"\n\n");
+//                insertColorText(textPaneBeforeR, styleRed, "Round key "+String.valueOf(roundIdx+1)+"\n\n");
 //                insertColorText(textPaneBeforeR, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(48,95));
 //                insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48,95));
 //
@@ -1102,8 +1102,8 @@ public class VisualizationExpandKey extends JDialog {
 
 
             if (current.getName().equals("Round key parts 0 and 1")) {
-//                stage.setText("Раунд №"+(roundIdx+1));
-                stageFeistel.setText("№ итерации развертывания ключа 0");
+//                stage.setText("Round #"+(roundIdx+1));
+                stageFeistel.setText("Key expansion round 0");
                 keyIdx = 1;
 //                roundIdx += 2;
 //                roundArrIdx++;
@@ -1140,12 +1140,12 @@ public class VisualizationExpandKey extends JDialog {
 
 //                Style styleRed = getStyleText(textPaneRoundKey, Color.RED);
 //                Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
-//                insertColorText(textPaneRoundKey, styleRed, "Секретный ключ:\n\n");
+//                insertColorText(textPaneRoundKey, styleRed, "Secret key:\n\n");
 //                insertColorText(textPaneRoundKey, styleBlack, String.valueOf(key));
-//                insertColorText(textPaneAfterL, styleRed, "Раундовый ключ 1\n\n");
+//                insertColorText(textPaneAfterL, styleRed, "Round key 1\n\n");
 //                insertColorText(textPaneBeforeL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0, 47));
 //                insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0, 47));
-//                insertColorText(textPaneAfterR, styleRed, "Раундовый ключ 2\n\n");
+//                insertColorText(textPaneAfterR, styleRed, "Round key 2\n\n");
 //                insertColorText(textPaneBeforeR, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(48, 95));
 //                insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48, 95));
             } else if (current.getName().equals("Round key parts " + (roundIdx+2) + " and " + (roundIdx + 3))) {
@@ -1163,8 +1163,8 @@ public class VisualizationExpandKey extends JDialog {
 //                textPaneS.setText(null);
 //                JOptionPane.showMessageDialog(
 //                        VisualizationExpandKey.this,
-//                        new String[]{"Уведомление, что нужно кликнуть 3 раза"},
-//                        "Уведомление о кликах",
+//                        new String[]{"Note that this step is repeated 3 times"},
+//                        "Operation notice",
 //                        JOptionPane.INFORMATION_MESSAGE);
                 roundKey2 = String.valueOf(Conversions.hex(current.getBefore())).substring(0, 47);
                 roundKey1 = String.valueOf(Conversions.hex(current.getBefore())).substring(48, 95);
@@ -1200,27 +1200,27 @@ public class VisualizationExpandKey extends JDialog {
                 textPaneS.setText(null);
                 textPaneRoundKey.setText(null);
 
-//                stage.setText("Раунд №"+(roundIdx+1));
-                stageFeistel.setText("№ итерации развертывания ключа " + (roundFeistelCounter));
+//                stage.setText("Round #"+(roundIdx+1));
+                stageFeistel.setText("Key expansion round " + (roundFeistelCounter));
                 nextRound.setEnabled(id < 148);
                 Style styleRed = getStyleText(textPaneRoundKey, Color.RED);
                 Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
                 Style styleBlue = getStyleText(textPaneRoundKey, Color.BLUE);
-                insertColorText(textPaneRoundKey, styleRed, "Секретный ключ:\n");
+                insertColorText(textPaneRoundKey, styleRed, "Secret key:\n");
                 insertColorText(textPaneRoundKey, styleBlack, String.valueOf(key));
-//                insertColorText(textPaneBeforeL, styleRed, "Раундовый ключ "+String.valueOf(keyIdx)+"\n\n");
+//                insertColorText(textPaneBeforeL, styleRed, "Round key "+String.valueOf(keyIdx)+"\n\n");
                 textPaneIterKeyL.setText(null);
-                insertColorText(textPaneIterKeyL, styleBlue, "Субблок L\n");
+                insertColorText(textPaneIterKeyL, styleBlue, "Subblock L\n");
                 insertColorText(textPaneIterKeyL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0, 47));
 
                 textPaneIterKeyR.setText(null);
-                insertColorText(textPaneIterKeyR, styleBlue, "Субблок R\n");
+                insertColorText(textPaneIterKeyR, styleBlue, "Subblock R\n");
                 insertColorText(textPaneIterKeyR, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(48, 95));
 
-                insertColorText(textPaneBeforeL, styleRed, "Раундовый ключ " + String.valueOf(keyIdx) + "\n");
+                insertColorText(textPaneBeforeL, styleRed, "Round key " + String.valueOf(keyIdx) + "\n");
                 insertColorText(textPaneBeforeL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0, 47));
 //                insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0,47));
-                insertColorText(textPaneBeforeR, styleRed, "Раундовый ключ " + String.valueOf(keyIdx + 1) + "\n");
+                insertColorText(textPaneBeforeR, styleRed, "Round key " + String.valueOf(keyIdx + 1) + "\n");
                 insertColorText(textPaneBeforeR, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(48, 95));
 //                insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48,95));
 
@@ -1241,7 +1241,7 @@ public class VisualizationExpandKey extends JDialog {
 
             tree.setSelectionPath(findTreePath(current));
             roundArrIdx++;
-            currentId = indexRounds[roundArrIdx]; // массив
+            currentId = indexRounds[roundArrIdx]; // index
         });
     } // nextRound
 
@@ -1326,13 +1326,13 @@ public class VisualizationExpandKey extends JDialog {
 
             Style styleRed = getStyleText(textPaneRoundKey, Color.RED);
             Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
-            insertColorText(textPaneRoundKey, styleRed, "Секретный ключ:\n");
+            insertColorText(textPaneRoundKey, styleRed, "Secret key:\n");
             insertColorText(textPaneRoundKey, styleBlack, String.valueOf(key));
-            insertColorText(textPaneBeforeL, styleRed, "Раундовый ключ " + (keyIdx) + "\n");
+            insertColorText(textPaneBeforeL, styleRed, "Round key " + (keyIdx) + "\n");
             insertColorText(textPaneBeforeL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0, 47));
 //            insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0,47));
 
-            insertColorText(textPaneBeforeR, styleRed, "Раундовый ключ " + (keyIdx + 1) + "\n");
+            insertColorText(textPaneBeforeR, styleRed, "Round key " + (keyIdx + 1) + "\n");
             insertColorText(textPaneBeforeR, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(48, 95));
 //            insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48,95));
 //            switch (current.getName()) {
@@ -1351,9 +1351,9 @@ public class VisualizationExpandKey extends JDialog {
 //            }
 
             if (current.getName().equals("Round key parts 0 and 1")) {
-//                stage.setText("Раунд №1");
+//                stage.setText("Round #1");
 //                prevStep.setEnabled(false);
-                stageFeistel.setText("№ итерации развертывания ключа 0");
+                stageFeistel.setText("Key expansion round 0");
                 roundIdx -= 2;
                 if (roundIdx < 0) {
                     roundIdx = 0;
@@ -1381,10 +1381,10 @@ public class VisualizationExpandKey extends JDialog {
 //                textPaneViz25.setText(null);
 
             } else if (current.getName().equals("Round key parts " + (roundIdx +2) + " and " + (roundIdx+3))) {
-//                stage.setText("Раунд №"+(roundIdx-1));
+//                stage.setText("Round #"+(roundIdx-1));
 
 //                prevStep.setEnabled(false);
-                stageFeistel.setText("№ итерации развертывания ключа " + (roundFeistelCounter));
+                stageFeistel.setText("Key expansion round " + (roundFeistelCounter));
 //                textPaneRoundKey.setText(null);
 //                textPaneBeforeL.setText(null);
 //                textPaneBeforeR.setText(null);
@@ -1392,12 +1392,12 @@ public class VisualizationExpandKey extends JDialog {
 //                textPaneAfterR.setText(null);
 //                Style styleRed = getStyleText(textPaneRoundKey, Color.RED);
 //                Style styleBlack = getStyleText(textPaneRoundKey, Color.BLACK);
-//                insertColorText(textPaneRoundKey, styleRed, "Секретный ключ:\n\n");
+//                insertColorText(textPaneRoundKey, styleRed, "Secret key:\n\n");
 //                insertColorText(textPaneRoundKey, styleBlack, String.valueOf(key));
-//                insertColorText(textPaneBeforeL, styleRed, "Раундовый ключ "+String.valueOf(keyIdx)+"\n\n");
+//                insertColorText(textPaneBeforeL, styleRed, "Round key "+String.valueOf(keyIdx)+"\n\n");
 //                insertColorText(textPaneBeforeL, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(0,47));
 //                insertColorText(textPaneAfterL, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(0,47));
-//                insertColorText(textPaneBeforeR, styleRed, "Раундовый ключ "+String.valueOf(keyIdx+1)+"\n\n");
+//                insertColorText(textPaneBeforeR, styleRed, "Round key "+String.valueOf(keyIdx+1)+"\n\n");
 //                insertColorText(textPaneBeforeR, styleBlack, String.valueOf(Conversions.hex(current.getBefore())).substring(48,95));
 //                insertColorText(textPaneAfterR, styleBlack, String.valueOf(Conversions.hex(current.getAfter())).substring(48,95));
                 xorResultIdx = 0;
@@ -1414,13 +1414,13 @@ public class VisualizationExpandKey extends JDialog {
 //                roundFeistelCounter -= 7;
 
             } else if (current.getName().equals("Feistel round" + (roundFeistel))) {
-                stageFeistel.setText("№ итерации развертывания ключа " + (roundFeistelCounter - 1));
+                stageFeistel.setText("Key expansion round " + (roundFeistelCounter - 1));
             } else if (current.getName().equals("Round key parts 2 and 3")) {
                 roundFeistelCounter = 1;
             }
             if (id == 1) {
-//                stage.setText("Раунд №1");
-                stageFeistel.setText("№ итерации развертывания ключа 0");
+//                stage.setText("Round #1");
+                stageFeistel.setText("Key expansion round 0");
                 prevRound.setEnabled(false);
             }
 

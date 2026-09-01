@@ -5,7 +5,7 @@ import analysis.Analysis;
 import ciphers.CipherHolder;
 import hashfunctions.Streebog;
 import mac.HMAC;
-import org.apache.commons.math3.util.Pair;
+import java.util.AbstractMap;
 import utils.Conversions;
 import utils.Generation;
 import widgets.HexTextField;
@@ -51,34 +51,34 @@ public class InputDialogConstructor {
         String algoName = algorithm.getName();
         switch (algoName) {
             case "ECB<Kuznyechik>":
-                algoName = "Режим простой замены шифра 'Кузнечик'";
+                algoName = "ECB Mode Cipher 'Kuznyechik'";
                 break;
             case "CBC<Kuznyechik>":
-                algoName = "Режим простой замены с зацеплением шифра 'Кузнечик'";
+                algoName = "CBC Mode Cipher 'Kuznyechik'";
                 break;
             case "CFB<Kuznyechik>":
-                algoName = "Режим гаммирования с обратной связью по шифртексту шифра 'Кузнечик'";
+                algoName = "CFB Mode Cipher 'Kuznyechik'";
                 break;
             case "CTR<Kuznyechik>":
-                algoName = "Режим гаммирования шифра 'Кузнечик'";
+                algoName = "CTR Mode Cipher 'Kuznyechik'";
                 break;
             case "OFB<Kuznyechik>":
-                algoName = "Режим гаммирования с обратной связью по выходу шифра 'Кузнечик'";
+                algoName = "OFB Mode Cipher 'Kuznyechik'";
                 break;
             case "ECB<Magma>":
-                algoName = "Режим простой замены шифра 'Магма'";
+                algoName = "ECB Mode Cipher 'Magma'";
                 break;
             case "CBC<Magma>":
-                algoName = "Режим простой замены с зацеплением шифра 'Магма'";
+                algoName = "CBC Mode Cipher 'Magma'";
                 break;
             case "CFB<Magma>":
-                algoName = "Режим гаммирования с обратной связью по шифртексту шифра 'Магма'";
+                algoName = "CFB Mode Cipher 'Magma'";
                 break;
             case "CTR<Magma>":
-                algoName = "Режим гаммирования шифра 'Магма'";
+                algoName = "CTR Mode Cipher 'Magma'";
                 break;
             case "OFB<Magma>":
-                algoName = "Режим гаммирования с обратной связью по выходу шифра 'Магма'";
+                algoName = "OFB Mode Cipher 'Magma'";
                 break;
         }
         Initializer init = showInputDialog(algoName, keySize, defaultPadding, defaultInitialVector, false, null);
@@ -89,10 +89,10 @@ public class InputDialogConstructor {
         String name = cipher.getName();
         switch (name) {
             case "Kuznyechik":
-                name = "CMAC Кузнечик";
+                name = "CMAC Kuznyechik";
                 break;
             case "Magma":
-                name = "CMAC Магма";
+                name = "CMAC Magma";
                 break;
         }
         Initializer init = showInputDialog(name, cipher.getKeySize(), null, null, false, null);
@@ -100,24 +100,24 @@ public class InputDialogConstructor {
     }
 
     public HMAC hmacDialog(Streebog hashfunction, byte[] mes){
-        Initializer init = showInputDialogFile("HMAC Стрибог");
+        Initializer init = showInputDialogFile("HMAC Streebog");
         return init == null ? null : new HMAC(hashfunction, init.key.getBytes(),mes);
     }
 
-    public Pair<ECB, byte[]> visualizationDialog(CipherHolder cipher) {
+    public AbstractMap.SimpleEntry<ECB, byte[]> visualizationDialog(CipherHolder cipher) {
         String name = cipher.getName();
         switch (name) {
             case "Kuznyechik":
-                name = "Визуализация работы шифра 'Кузнечик'";
+                name = "Visualization of Cipher 'Kuznyechik' Operation";
                 break;
             case "Magma":
-                name = "Визуализация работы шифра 'Магма'";
+                name = "Visualization of Cipher 'Magma' Operation";
                 break;
         }
         byte[] data = new byte[cipher.getBlockSize()];
         Padding defaultPadding = ECB.defaultPadding;
         Initializer init = showInputDialog(name, cipher.getKeySize(), defaultPadding, null, false, data);
-        return init == null ? null : new Pair<>(ECB.withState(cipher, Conversions.hex(init.key), init.padding), data);
+        return init == null ? null : new AbstractMap.SimpleEntry<>(ECB.withState(cipher, Conversions.hex(init.key), init.padding), data);
     }
 
 
@@ -125,10 +125,10 @@ public class InputDialogConstructor {
         String algoName = algorithm.getName();
         switch (algoName) {
             case "Kuznyechik":
-                algoName = "Анализ криптостойкости шифра 'Кузнечик'";
+                algoName = "Cryptographic Analysis of Cipher 'Kuznyechik'";
                 break;
             case "Magma":
-                algoName = "Анализ криптостойкости шифра 'Магма'";
+                algoName = "Cryptographic Analysis of Cipher 'Magma'";
                 break;
         }
         int keySize = algorithm.getCipherHolder().getKeySize();
@@ -140,19 +140,19 @@ public class InputDialogConstructor {
 
     private Initializer showInputDialogFile(String name){
         JTextField key = new JTextField();
-        List<JComponent> inputs = new ArrayList<>(List.of(new JLabel("Введите ключ"), key));
+        List<JComponent> inputs = new ArrayList<>(List.of(new JLabel("Enter key"), key));
 
         int result = JOptionPane.showConfirmDialog(parent, inputs.toArray(), name, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             String resultKey = key.getText();
             /*
             if (resultKey.split(" ").length != keyLength) {
-                JOptionPane.showMessageDialog(parent, String.format("Секретный ключ должен быть длиной %d байт", keyLength), "Неверные данные", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(parent, String.format("Secret key must be %d bytes long", keyLength), "Invalid data", JOptionPane.WARNING_MESSAGE);
                 return null;
             }
             byte[] resultInitialVector = defaultInitialVector == null ? null : initialVector.getBytes();
             if (resultInitialVector != null && resultInitialVector.length != defaultInitialVector.length) {
-                JOptionPane.showMessageDialog(parent, String.format("Начальный вектор инициализации должен быть длиной %d байт", defaultInitialVector.length), "Неверные данные", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(parent, String.format("Initialization vector must be %d bytes long", defaultInitialVector.length), "Invalid data", JOptionPane.WARNING_MESSAGE);
                 return null;
             }
             Padding resultPadding = defaultPadding == null ? null : (Padding) padding.getSelectedItem();
@@ -172,23 +172,23 @@ public class InputDialogConstructor {
         JComboBox<Padding> padding = new JComboBox<>(new Padding[]{Padding._OOOOOO, Padding._8OOOOO});
         HexTextField dataInput = new HexTextField(false);
 
-        List<JComponent> inputs = new ArrayList<>(List.of(new JLabel("Секретный ключ"), key));
+        List<JComponent> inputs = new ArrayList<>(List.of(new JLabel("Secret key"), key));
 
         if (defaultPadding != null) {
-            inputs.add(new JLabel("Способ дополнения"));
+            inputs.add(new JLabel("Padding method"));
             padding.setSelectedItem(defaultPadding);
             inputs.add(padding);
         }
 
         if (defaultInitialVector != null) {
-            inputs.add(new JLabel("Синхропосылка"));
+            inputs.add(new JLabel("Initialization vector"));
             initialVector.setBytesLength(defaultInitialVector.length);
             initialVector.setText(Conversions.hex(defaultInitialVector));
             inputs.add(initialVector);
         }
 
         if (data != null) {
-            inputs.add(new JLabel(String.format("Блок данных (%s байт)", data.length)));
+            inputs.add(new JLabel(String.format("Data block (%s bytes)", data.length)));
             dataInput.setBytesLength(data.length);
             dataInput.setText(Conversions.hex(Generation.randomBytes(data.length)));
             inputs.add(dataInput);
@@ -198,12 +198,12 @@ public class InputDialogConstructor {
         if (result == JOptionPane.OK_OPTION) {
             String resultKey = key.getText();
             if (resultKey.split(" ").length != keyLength) {
-                JOptionPane.showMessageDialog(parent, String.format("Секретный ключ должен быть длиной %d байт", keyLength), "Неверные данные", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(parent, String.format("Secret key must be %d bytes long", keyLength), "Invalid data", JOptionPane.WARNING_MESSAGE);
                 return null;
             }
             byte[] resultInitialVector = defaultInitialVector == null ? null : initialVector.getBytes();
             if (resultInitialVector != null && resultInitialVector.length != defaultInitialVector.length) {
-                JOptionPane.showMessageDialog(parent, String.format("Начальный вектор инициализации должен быть длиной %d байт", defaultInitialVector.length), "Неверные данные", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(parent, String.format("Initialization vector must be %d bytes long", defaultInitialVector.length), "Invalid data", JOptionPane.WARNING_MESSAGE);
                 return null;
             }
             Padding resultPadding = defaultPadding == null ? null : (Padding) padding.getSelectedItem();

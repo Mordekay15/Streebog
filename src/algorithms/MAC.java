@@ -86,7 +86,7 @@ public final class MAC {
 
     public byte[] subscribe(byte[] data, int length) {
         if (length > blockSize) {
-            throw new RuntimeException(String.format("Запрашиваемый размер MAC на %d больше размера блока (%d)", length, blockSize));
+            throw new RuntimeException(String.format("Requested MAC size %d is greater than block size (%d)", length, blockSize));
         }
         return Arrays.copyOf(getMAC(data), length);
     }

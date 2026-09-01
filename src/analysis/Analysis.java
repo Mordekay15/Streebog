@@ -84,7 +84,7 @@ public final class Analysis {
     }
 
 
-//    TODO: ниже три функции это разработка
+//    TODO: below three functions are under development
 
 //    private List<String> generateSubstitutions(String template) {
 //        List<String> substitutions = new ArrayList<>();
@@ -118,13 +118,13 @@ public final class Analysis {
 //        while (keyOptions.hasNext() && flagKey) {
 //            String currentTemplate = keyTemplate;
 //
-//            // Получаем список всех возможных замен
+//            // Get list of all possible substitutions
 //            List<String> substitutions = generateSubstitutions(currentTemplate);
 //
 //            for (String substitution : substitutions) {
 //                byte[] nextKey = Conversions.hex(substitution);
 //
-//                // Выводим сгенерированный ключ в консоль
+//                // Print the generated key to console
 //                System.out.println("Generated Key: " + substitution);
 //
 //                Algorithm algorithm = holder.instantiate(nextKey, initialVector, padding);

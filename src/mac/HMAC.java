@@ -22,26 +22,26 @@ public class HMAC {
         this.message = message;
     }
 
-    // Функция для вычисления HMAC
+    // Function to compute HMAC
     public byte[] computeHMAC() {
         if (this.key.length > block_size) {
-            this.key = this.hashfunction.get_hash(this.key); // Если ключ длиннее размера блока, сжимаем его
+            this.key = this.hashfunction.get_hash(this.key); // If key is longer than block size, compress it
         } else if (this.key.length < block_size) {
-            // Дополняем ключ нулями до размера блока
+            // Pad key with zeros to block size
             this.key = Arrays.copyOf(this.key, block_size);
         }
 
-        byte[] o_key_pad = XOR(this.key, new byte[block_size]); // Внешняя оболочка
-        byte[] i_key_pad = XOR(this.key, new byte[block_size]); // Внутренняя оболочка
+        byte[] o_key_pad = XOR(this.key, new byte[block_size]); // Outer wrapper
+        byte[] i_key_pad = XOR(this.key, new byte[block_size]); // Inner wrapper
 
         for (int i = 0; i < block_size; i++) {
             o_key_pad[i] ^= 0x5c;
             i_key_pad[i] ^= 0x36;
         }
 
-        // Внутренний хеш
+        // Inner hash
         byte[] innerHash = this.hashfunction.get_hash(join(i_key_pad, this.message));
-        // Внешний хеш
+        // Outer hash
         return this.hashfunction.get_hash(join(o_key_pad, innerHash));
     }
 

@@ -27,14 +27,14 @@ public class VisualizationMagmaKey extends JDialog {
     private final JButton next = new JButton(">>");
     private final JButton previous = new JButton("<<");
 
-    private final JLabel stage = new JLabel("Раунд №_", SwingConstants.CENTER);
+    private final JLabel stage = new JLabel("Round #_", SwingConstants.CENTER);
 
     private JTextPane fieldRoundKey = new JTextPane();
 
-    private final JButton genKeyHint = new JButton("Схема раундовых ключей");
+    private final JButton genKeyHint = new JButton("Round key schedule diagram");
 
     public VisualizationMagmaKey(Component owner, State state, byte[] result) {
-        super((Frame) SwingUtilities.getWindowAncestor(owner), "Визуализация развертывания раундовых ключей шифра 'Магма'", false);
+        super((Frame) SwingUtilities.getWindowAncestor(owner), "Round Key Expansion Visualization - Magma Cipher", false);
         stateList = createStateList(state);
         Font font = new Font("Arial", Font.BOLD, fontSize);
 
@@ -89,7 +89,7 @@ public class VisualizationMagmaKey extends JDialog {
 
         String fileName = "keysMagma.png";
         String textFileName = "keysMagma_hint.txt";
-        String title = "Расписание раундовых ключей";
+        String title = "Round key generation";
         Desktop dt = Desktop.getDesktop();
         String user = getUser();
 
@@ -161,12 +161,12 @@ public class VisualizationMagmaKey extends JDialog {
                 Style styleRed = getStyleText(fieldRoundKey, Color.RED);
                 Style styleBlack = getStyleText(fieldRoundKey, Color.BLACK);
                 Style styleBlue = getStyleText(fieldRoundKey, Color.BLUE);
-                insertColorText(fieldRoundKey, styleRed, "Секретный ключ:");
+                insertColorText(fieldRoundKey, styleRed, "Secret key:");
                 insertColorText(fieldRoundKey, styleBlack, " " + String.valueOf(Conversions.hex(current.getBefore())));
-                insertColorText(fieldRoundKey, styleBlue, "\n\nРаундовый ключ:");
+                insertColorText(fieldRoundKey, styleBlue, "\n\nRound key:");
                 insertColorText(fieldRoundKey, styleBlack, " " + String.valueOf(Conversions.hex(current.getAfter())));
                 keyCounter--;
-                stage.setText("Раунд №" + String.valueOf(keyCounter));
+                stage.setText("Round #" + String.valueOf(keyCounter));
             }
             currentId = id;
         });
@@ -183,12 +183,12 @@ public class VisualizationMagmaKey extends JDialog {
                 Style styleRed = getStyleText(fieldRoundKey, Color.RED);
                 Style styleBlack = getStyleText(fieldRoundKey, Color.BLACK);
                 Style styleBlue = getStyleText(fieldRoundKey, Color.BLUE);
-                insertColorText(fieldRoundKey, styleRed, "Секретный ключ:");
+                insertColorText(fieldRoundKey, styleRed, "Secret key:");
                 insertColorText(fieldRoundKey, styleBlack, " " + String.valueOf(Conversions.hex(current.getBefore())));
-                insertColorText(fieldRoundKey, styleBlue, "\n\nРаундовый ключ:");
+                insertColorText(fieldRoundKey, styleBlue, "\n\nRound key:");
                 insertColorText(fieldRoundKey, styleBlack, " " + String.valueOf(Conversions.hex(current.getAfter())));
                 keyCounter++;
-                stage.setText("Раунд №" + String.valueOf(keyCounter));
+                stage.setText("Round #" + String.valueOf(keyCounter));
             }
 
             currentId = id;

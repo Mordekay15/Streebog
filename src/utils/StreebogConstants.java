@@ -1,7 +1,7 @@
 package utils;
 
 public class StreebogConstants {
-    //значения для перестановки байт (преобразование P)
+    // Values for byte permutation (P transformation)
     public static final byte[] Tau = {
             0,  8, 16, 24, 32, 40, 48, 56,
             1,  9, 17, 25, 33, 41, 49, 57,
@@ -13,7 +13,7 @@ public class StreebogConstants {
             7, 15, 23, 31, 39, 47, 55, 63
     };
 
-    //значения для нелинейного преобразования множества двоичных векторов (преобразование S)
+    // Values for non-linear transformation of binary vectors (S transformation)
     public static final int[] Pi = {
             252, 238, 221,  17, 207, 110,  49,  22,
             251, 196, 250, 218,  35, 197,   4,  77,
@@ -49,7 +49,7 @@ public class StreebogConstants {
             209, 102, 175, 194,  57,  75,  99, 182
     };
 
-    // значения для линейного преобразования множества двоичных векторов (преобразование L)
+    // Values for linear transformation of binary vectors (L transformation)
     public static final long[] A = {
         0x8e20faa72ba0b470L,
             0x47107ddd9b505a38L,
@@ -117,7 +117,7 @@ public class StreebogConstants {
             0x641c314b2b8ee083L
     };
 
-    //итерационные константы
+    // Iteration constants
     public static final long[][] C = {
         {
             0x07, 0x45, 0xa6, 0xf2, 0x59, 0x65, 0x80, 0xdd,

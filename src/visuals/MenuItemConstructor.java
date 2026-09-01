@@ -9,7 +9,7 @@ import ciphers.CipherHolder;
 import hashfunctions.HashFunction;
 import hashfunctions.HashFunctionHolder;
 import mac.HMAC;
-import org.apache.commons.math3.util.Pair;
+import java.util.AbstractMap;
 import widgets.FileFrame;
 import workers.*;
 import hashfunctions.Streebog;
@@ -65,7 +65,7 @@ public class MenuItemConstructor {
             public void actionPerformed(ActionEvent ae) {
                 FileFrame selected = (FileFrame) target.getSelectedFrame();
                 Algorithm algorithm = InputDialogConstructor.get(target).algorithmDialog(holder);
-                GeneralExecutor executor = new GeneralExecutor(target, "Зашифрование",
+                GeneralExecutor executor = new GeneralExecutor(target, "Encryption",
                         () -> algorithm.encrypt(selected.getByteContent()),
                         (byte[] value) -> selected.process(value, "encrypted"));
                 executor.execute();
@@ -79,7 +79,7 @@ public class MenuItemConstructor {
             public void actionPerformed(ActionEvent ae) {
                 FileFrame selected = (FileFrame) target.getSelectedFrame();
                 Algorithm algorithm = InputDialogConstructor.get(target).algorithmDialog(holder);
-                GeneralExecutor executor = new GeneralExecutor(target, "Расшифрование",
+                GeneralExecutor executor = new GeneralExecutor(target, "Decryption",
                         () -> algorithm.decrypt(selected.getByteContent()),
                         (byte[] value) -> selected.process(value, "decrypted"));
                 executor.execute();
@@ -97,7 +97,7 @@ public class MenuItemConstructor {
             public void actionPerformed(ActionEvent ae) {
                 FileFrame selected = (FileFrame) target.getSelectedFrame();
                 MAC mac = InputDialogConstructor.get(target).macDialog(holder);
-                GeneralExecutor executor = new GeneralExecutor(target, "Создание кода имитовставки",
+                GeneralExecutor executor = new GeneralExecutor(target, "MAC Generation",
                         () -> mac.subscribe(selected.getByteContent()),
                         (byte[] value) -> selected.process(value, "subscribed"));
                 executor.execute();
@@ -125,8 +125,8 @@ public class MenuItemConstructor {
         return new JMenuItem(new AbstractAction(name) {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Pair<ECB, byte[]> result = InputDialogConstructorKuznyechikRound.get(target).visualizationDialog(holder);
-                VisualizationKuznyechikRoundExecutor executor = new VisualizationKuznyechikRoundExecutor(target, result.getFirst(), result.getSecond());
+                AbstractMap.SimpleEntry<ECB, byte[]> result = InputDialogConstructorKuznyechikRound.get(target).visualizationDialog(holder);
+                VisualizationKuznyechikRoundExecutor executor = new VisualizationKuznyechikRoundExecutor(target, result.getKey(), result.getValue());
                 executor.execute();
             }
         });
@@ -136,8 +136,8 @@ public class MenuItemConstructor {
         return new JMenuItem(new AbstractAction(name) {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Pair<ECB, byte[]> result = InputDialogConstructorMagmaRound.get(target).visualizationDialog(holder);
-                VisualizationExecutorMagmaRound executor = new VisualizationExecutorMagmaRound(target, result.getFirst(), result.getSecond());
+                AbstractMap.SimpleEntry<ECB, byte[]> result = InputDialogConstructorMagmaRound.get(target).visualizationDialog(holder);
+                VisualizationExecutorMagmaRound executor = new VisualizationExecutorMagmaRound(target, result.getKey(), result.getValue());
                 executor.execute();
             }
         });
@@ -147,8 +147,8 @@ public class MenuItemConstructor {
         return new JMenuItem(new AbstractAction(name) {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Pair<ECB, byte[]> result = InputDialogConstructorExpandMagmaKey.get(target).visualizationDialog(holder);
-                VisualizationExecutorMagmaKey executor = new VisualizationExecutorMagmaKey(target, result.getFirst(), result.getSecond());
+                AbstractMap.SimpleEntry<ECB, byte[]> result = InputDialogConstructorExpandMagmaKey.get(target).visualizationDialog(holder);
+                VisualizationExecutorMagmaKey executor = new VisualizationExecutorMagmaKey(target, result.getKey(), result.getValue());
                 executor.execute();
             }
         });
@@ -158,8 +158,8 @@ public class MenuItemConstructor {
         return new JMenuItem(new AbstractAction(name) {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Pair<ECB, byte[]> result = InputDialogConstructorExpandKuznyechikKey.get(target).visualizationDialog(holder);
-                VisualizationExpandKeyExecutor executor = new VisualizationExpandKeyExecutor(target, result.getFirst(), result.getSecond());
+                AbstractMap.SimpleEntry<ECB, byte[]> result = InputDialogConstructorExpandKuznyechikKey.get(target).visualizationDialog(holder);
+                VisualizationExpandKeyExecutor executor = new VisualizationExpandKeyExecutor(target, result.getKey(), result.getValue());
                 executor.execute();
             }
         });
@@ -169,8 +169,8 @@ public class MenuItemConstructor {
         return new JMenuItem(new AbstractAction(name) {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Pair<ECB, byte[]> result = InputDialogConstructor.get(target).visualizationDialog(holder);
-                VisualizationRegisterExecutor executor = new VisualizationRegisterExecutor(target, result.getFirst(), result.getSecond());
+                AbstractMap.SimpleEntry<ECB, byte[]> result = InputDialogConstructor.get(target).visualizationDialog(holder);
+                VisualizationRegisterExecutor executor = new VisualizationRegisterExecutor(target, result.getKey(), result.getValue());
                 executor.execute();
             }
         });
@@ -185,12 +185,12 @@ public class MenuItemConstructor {
                 HashFunction streebog = hashfunction.instantiate(length);//= new Streebog(length);
                 GeneralExecutor executor;
                 if(length == 256) {
-                    executor = new GeneralExecutor(target, "Хеширование Стрибог-256",
+                    executor = new GeneralExecutor(target, "Hashing Streebog-256",
                             ()-> streebog.get_hash(selected.getByteContent()),
                             (byte[] value) -> selected.process(value, "streebog-256"));
                 }
                 else {
-                    executor = new GeneralExecutor(target, "Хеширование Стрибог-512",
+                    executor = new GeneralExecutor(target, "Hashing Streebog-512",
                             ()-> streebog.get_hash(selected.getByteContent()),
                             (byte[] value) -> selected.process(value, "streebog-512"));
                 }

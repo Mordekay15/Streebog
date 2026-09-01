@@ -35,11 +35,11 @@ public class VisualizationKuznyechikRegister extends JDialog {
 
     private final int[] indexRounds = new int[]{3, 21, 39, 57, 75, 93, 111, 129, 147, 162};
 
-    private final JLabel step = new JLabel("Шаг №_", SwingConstants.CENTER);
+    private final JLabel step = new JLabel("Step #_", SwingConstants.CENTER);
 
 
     public VisualizationKuznyechikRegister(Component owner, State state, byte[] result) {
-        super((Frame) SwingUtilities.getWindowAncestor(owner), "Визуализация работы регистра сдвига шифра 'Кузнечик'", false);
+        super((Frame) SwingUtilities.getWindowAncestor(owner), "Shift Register Visualization - Kuznyechik Cipher", false);
         Font font = new Font("Arial", Font.BOLD, fontSize);
         stateList = createStateList(state);
 
@@ -50,16 +50,6 @@ public class VisualizationKuznyechikRegister extends JDialog {
         prevStep.setForeground(Color.RED);
 
         step.setForeground(Color.RED);
-//        textPaneLinearConvert
-
-
-//        float[] hsbValues = Color.RGBtoHSB(255, 245, 238, null);
-//        float hue = hsbValues[0]; // оттенок
-//        float saturation = hsbValues[1]; // насыщенность
-//        float brightness = hsbValues[2]; // яркость
-//        System.out.println("hue: "+hue);
-//        System.out.println("saturation: "+saturation);
-//        System.out.println("brightness: "+brightness);
 
         textPaneLinearConvert.setBackground(Color.getHSBColor(0.33f, 0.058f, 1.f));
 
@@ -142,14 +132,14 @@ public class VisualizationKuznyechikRegister extends JDialog {
         Style styleRed = getStyleText(textPaneLinearConvert, Color.RED);
         Style styleBlue = getStyleText(textPaneLinearConvert, Color.BLUE);
 
-        insertColorText(textPaneLinearConvert, styleRed, "Регистр:");
+        insertColorText(textPaneLinearConvert, styleRed, "Register:");
         insertColorText(textPaneLinearConvert, styleRed, " " + Conversions.hex(curTemp.getBefore()));
-        insertColorText(textPaneLinearConvert, styleBlue, "\n\nСдвиг №");
+        insertColorText(textPaneLinearConvert, styleBlue, "\n\nRound #");
         insertColorText(textPaneLinearConvert, styleBlue, "1");
-        insertColorText(textPaneLinearConvert, styleRed, "\n\nРегистр:");
+        insertColorText(textPaneLinearConvert, styleRed, "\n\nRegister:");
         insertColorText(textPaneLinearConvert, styleRed, " " + String.valueOf(Conversions.hex(curTemp.getAfter())));
         lcIdx = 0;
-        step.setText("Шаг №" + Integer.toString(lcIdx));
+        step.setText("Step #" + Integer.toString(lcIdx));
         prevRound.setEnabled(false);
         prevStep.setEnabled(false);
 
@@ -172,14 +162,14 @@ public class VisualizationKuznyechikRegister extends JDialog {
                 Style styleRed = getStyleText(textPaneLinearConvert, Color.RED);
                 Style styleBlue = getStyleText(textPaneLinearConvert, Color.BLUE);
 
-                insertColorText(textPaneLinearConvert, styleRed, "Регистр:");
+                insertColorText(textPaneLinearConvert, styleRed, "Register:");
                 insertColorText(textPaneLinearConvert, styleRed, " " + Conversions.hex(current_prev.getBefore()));
-                insertColorText(textPaneLinearConvert, styleBlue, "\n\nСдвиг №");
+                insertColorText(textPaneLinearConvert, styleBlue, "\n\nRound #");
                 insertColorText(textPaneLinearConvert, styleBlue, Integer.toString(roundIdx));
-                insertColorText(textPaneLinearConvert, styleRed, "\n\nРегистр:");
+                insertColorText(textPaneLinearConvert, styleRed, "\n\nRegister:");
                 insertColorText(textPaneLinearConvert, styleRed, " " + String.valueOf(Conversions.hex(current_prev.getAfter())));
                 lcIdx--;
-                step.setText("Шаг №" + Integer.toString(lcIdx));
+                step.setText("Step #" + Integer.toString(lcIdx));
             }
             if (current_prev.getName()
                     .equals("Round " + (roundIdx - 1))) {
@@ -188,16 +178,16 @@ public class VisualizationKuznyechikRegister extends JDialog {
                 Style styleRed = getStyleText(textPaneLinearConvert, Color.RED);
                 Style styleBlue = getStyleText(textPaneLinearConvert, Color.BLUE);
 
-                insertColorText(textPaneLinearConvert, styleRed, "Регистр:");
+                insertColorText(textPaneLinearConvert, styleRed, "Register:");
                 insertColorText(textPaneLinearConvert, styleRed, " " + Conversions.hex(current_prev.getBefore()));
-                insertColorText(textPaneLinearConvert, styleBlue, "\n\nСдвиг №");
+                insertColorText(textPaneLinearConvert, styleBlue, "\n\nRound #");
                 insertColorText(textPaneLinearConvert, styleBlue, Integer.toString(roundIdx - 1));
-                insertColorText(textPaneLinearConvert, styleRed, "\n\nРегистр:");
+                insertColorText(textPaneLinearConvert, styleRed, "\n\nRegister:");
                 insertColorText(textPaneLinearConvert, styleRed, " " + String.valueOf(Conversions.hex(current_prev.getAfter())));
                 lcIdx--;
                 roundArrIdx--;
                 roundIdx--;
-                step.setText("Шаг №" + Integer.toString(lcIdx));
+                step.setText("Step #" + Integer.toString(lcIdx));
 
 
             }
@@ -206,7 +196,7 @@ public class VisualizationKuznyechikRegister extends JDialog {
                 lcIdx = 0;
                 prevStep.setEnabled(false);
                 nextRound.setEnabled(true);
-                step.setText("Шаг №" + Integer.toString(lcIdx));
+                step.setText("Step #" + Integer.toString(lcIdx));
             } else {
                 prevStep.setEnabled(true);
             }
@@ -224,7 +214,7 @@ public class VisualizationKuznyechikRegister extends JDialog {
         SwingUtilities.invokeLater(() -> {
             lcIdx = 0;
 
-            step.setText("Шаг №" + Integer.toString(lcIdx));
+            step.setText("Step #" + Integer.toString(lcIdx));
             State current = stateList.get(id);
 //            System.out.println("DEBUG lcIdx before: " + lcIdx);
 //            System.out.println("DEBUG roundIdx before: " + roundIdx);
@@ -237,33 +227,33 @@ public class VisualizationKuznyechikRegister extends JDialog {
                 Style styleRed = getStyleText(textPaneLinearConvert, Color.RED);
                 Style styleBlue = getStyleText(textPaneLinearConvert, Color.BLUE);
 
-                insertColorText(textPaneLinearConvert, styleRed, "Регистр:");
+                insertColorText(textPaneLinearConvert, styleRed, "Register:");
                 insertColorText(textPaneLinearConvert, styleRed, " " + Conversions.hex(current.getBefore()));
-                insertColorText(textPaneLinearConvert, styleBlue, "\n\nСдвиг №");
+                insertColorText(textPaneLinearConvert, styleBlue, "\n\nRound #");
                 insertColorText(textPaneLinearConvert, styleBlue, Integer.toString(roundIdx + 1));
-                insertColorText(textPaneLinearConvert, styleRed, "\n\nРегистр:");
+                insertColorText(textPaneLinearConvert, styleRed, "\n\nRegister:");
                 insertColorText(textPaneLinearConvert, styleRed, " " + String.valueOf(Conversions.hex(current.getAfter())));
                 lcIdx++;
                 roundIdx++;
                 roundArrIdx++;
-                step.setText("Шаг №" + Integer.toString(lcIdx));
+                step.setText("Step #" + Integer.toString(lcIdx));
 
             }
             if (current.getName().equals("Linear convert 15")) {
                 nextStep.setEnabled(false);
                 lcIdx = 15;
-                step.setText("Шаг №" + Integer.toString(lcIdx));
+                step.setText("Step #" + Integer.toString(lcIdx));
             }
             if (current.getName().equals("Linear convert 0")) {
                 prevStep.setEnabled(false);
                 lcIdx = 0;
-                step.setText("Шаг №" + Integer.toString(lcIdx));
+                step.setText("Step #" + Integer.toString(lcIdx));
             }
             if (current.getName().equals("Round 9")) {
                 textPaneLinearConvert.setText(null);
                 Style styleRed = getStyleText(textPaneLinearConvert, Color.RED);
 
-                insertColorText(textPaneLinearConvert, styleRed, "Регистр:");
+                insertColorText(textPaneLinearConvert, styleRed, "Register:");
                 insertColorText(textPaneLinearConvert, styleRed, " " + Conversions.hex(current.getBefore()));
                 prevStep.setEnabled(false);
                 nextStep.setEnabled(false);
@@ -289,7 +279,7 @@ public class VisualizationKuznyechikRegister extends JDialog {
         SwingUtilities.invokeLater(() -> {
             lcIdx = 0;
             nextStep.setEnabled(true);
-            step.setText("Шаг №" + Integer.toString(lcIdx));
+            step.setText("Step #" + Integer.toString(lcIdx));
             State current = stateList.get(id);
 //            System.out.println("DEBUG lcIdx before: " + lcIdx);
             if (current.getName().equals("Linear convert " + (lcIdx))) {
@@ -299,11 +289,11 @@ public class VisualizationKuznyechikRegister extends JDialog {
                 Style styleRed = getStyleText(textPaneLinearConvert, Color.RED);
                 Style styleBlue = getStyleText(textPaneLinearConvert, Color.BLUE);
 
-                insertColorText(textPaneLinearConvert, styleRed, "Регистр:");
+                insertColorText(textPaneLinearConvert, styleRed, "Register:");
                 insertColorText(textPaneLinearConvert, styleRed, " " + Conversions.hex(current.getBefore()));
-                insertColorText(textPaneLinearConvert, styleBlue, "\n\nСдвиг №");
+                insertColorText(textPaneLinearConvert, styleBlue, "\n\nRound #");
                 insertColorText(textPaneLinearConvert, styleBlue, Integer.toString(roundIdx - 1));
-                insertColorText(textPaneLinearConvert, styleRed, "\n\nРегистр:");
+                insertColorText(textPaneLinearConvert, styleRed, "\n\nRegister:");
                 insertColorText(textPaneLinearConvert, styleRed, " " + String.valueOf(Conversions.hex(current.getAfter())));
                 roundIdx--;
                 roundArrIdx--;
@@ -312,7 +302,7 @@ public class VisualizationKuznyechikRegister extends JDialog {
             if (current.getName().equals("Linear convert 15")) {
                 nextStep.setEnabled(false);
                 lcIdx = 15;
-                step.setText("Шаг №" + Integer.toString(lcIdx));
+                step.setText("Step #" + Integer.toString(lcIdx));
             }
             if (current.getName().equals("Linear convert 0")) {
                 prevStep.setEnabled(false);
@@ -340,15 +330,14 @@ public class VisualizationKuznyechikRegister extends JDialog {
                 Style styleRed = getStyleText(textPaneLinearConvert, Color.RED);
                 Style styleBlue = getStyleText(textPaneLinearConvert, Color.BLUE);
 
-                insertColorText(textPaneLinearConvert, styleRed, "Регистр:");
+                insertColorText(textPaneLinearConvert, styleRed, "Register:");
                 insertColorText(textPaneLinearConvert, styleRed, " " + Conversions.hex(current.getBefore()));
-                insertColorText(textPaneLinearConvert, styleBlue, "\n\nСдвиг №");
+                insertColorText(textPaneLinearConvert, styleBlue, "\n\nRound #");
                 insertColorText(textPaneLinearConvert, styleBlue, Integer.toString(roundIdx));
-                insertColorText(textPaneLinearConvert, styleRed, "\n\nРегистр:");
+                insertColorText(textPaneLinearConvert, styleRed, "\n\nRegister:");
                 insertColorText(textPaneLinearConvert, styleRed, " " + String.valueOf(Conversions.hex(current.getAfter())));
-//                System.out.println("lcIdx = "+lcIdx);
                 lcIdx++;
-                step.setText("Шаг №" + Integer.toString(lcIdx));
+                step.setText("Step #" + Integer.toString(lcIdx));
             } else if (current.getName()
                     .equals("Round " + roundIdx)) {
                 roundIdx++;

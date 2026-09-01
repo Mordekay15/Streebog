@@ -48,17 +48,17 @@ public class VisualizationKuznyechikRound extends JDialog {
     private final JButton previousStep = new JButton("<");
     private final JButton nextRound = new JButton(">>");
     private final JButton previousRound = new JButton("<<");
-    private final JButton xHint = new JButton("Преобразование: 'сложение XOR'");
-    private final JButton sHint = new JButton("Преобразование: 'подстановка S'");
-    private final JButton lHint = new JButton("Преобразование: 'регистр сдвига L'");
+    private final JButton xHint = new JButton("Transformation: 'XOR operation'");
+    private final JButton sHint = new JButton("Transformation: 'S-box substitution'");
+    private final JButton lHint = new JButton("Transformation: 'Shift register L'");
 
     private final int[] indexRounds = new int[]{1, 5, 9, 13, 17, 21, 25, 29, 33, 37};
 
     private final int[] indexResultL = new int[]{4, 8, 12, 16, 20, 24, 28, 32, 36};
-    private final JLabel stage = new JLabel("Раунд №_", SwingConstants.CENTER);
+    private final JLabel stage = new JLabel("Round #_", SwingConstants.CENTER);
 
     public VisualizationKuznyechikRound(Component owner, State state, byte[] result, String key, String block) {
-        super((Frame) SwingUtilities.getWindowAncestor(owner), "Визуализация раундовых преобразований шифра 'Кузнечик'", false);
+        super((Frame) SwingUtilities.getWindowAncestor(owner), "Round Transformation Visualization - Kuznyechik Cipher", false);
         Font font = new Font("Arial", Font.BOLD, fontSize);
 
         stateList = createStateList(state);
@@ -98,10 +98,10 @@ public class VisualizationKuznyechikRound extends JDialog {
         textPaneKeyBlock.setText(null);
         Style styleRed = getStyleText(textPaneKeyBlock, Color.RED);
 
-        insertColorText(textPaneKeyBlock, styleRed, "Блок данных:");
+        insertColorText(textPaneKeyBlock, styleRed, "Data block:");
         insertColorText(textPaneKeyBlock, styleRed, " " + block);
 
-        insertColorText(textPaneKeyBlock, styleRed, "\n\nРаундовый ключ:");
+        insertColorText(textPaneKeyBlock, styleRed, "\n\nRound key:");
         insertColorText(textPaneKeyBlock, styleRed, " " + roundKeyForHint);
 
         System.out.println(stateList);
@@ -181,7 +181,7 @@ public class VisualizationKuznyechikRound extends JDialog {
     private void xHintButton() {
         String textFileName = "X_hint.txt";
         String user = getUser();
-        String title = "Принцип работы X-преобразования";
+        String title = "How the X transformation works";
 
         if (isWindows()) {
             String path = "C:\\Users\\" + user + "\\Documents\\CryptoETU\\"+ textFileName;
@@ -215,7 +215,7 @@ public class VisualizationKuznyechikRound extends JDialog {
         String textFileName = "S_hint.txt";
         Desktop dt = Desktop.getDesktop();
         String user = getUser();
-        String title = "Принцип работы S-преобразования";
+        String title = "How the S transformation works";
 
         if (isWindows()) {
             String path = "C:\\Users\\" + user + "\\Documents\\CryptoETU\\"+ textFileName;
@@ -254,7 +254,7 @@ public class VisualizationKuznyechikRound extends JDialog {
     private void lHintButton() throws Exception {
         String textFileName = "L_hint.txt";
         String user = getUser();
-        String title = "Принцип работы L-преобразования";
+        String title = "How the L transformation works";
 
         if (isWindows()) {
             String path = "C:\\Users\\" + user + "\\Documents\\CryptoETU\\"+ textFileName;
@@ -310,47 +310,47 @@ public class VisualizationKuznyechikRound extends JDialog {
         textPaneKeyBlock.setText(null);
         Style styleRed = getStyleText(textPaneKeyBlock, Color.RED);
 
-        insertColorText(textPaneKeyBlock, styleRed, "Блок данных:");
+        insertColorText(textPaneKeyBlock, styleRed, "Data block:");
         insertColorText(textPaneKeyBlock, styleRed, " " + block);
 
 
-        insertColorText(textPaneKeyBlock, styleRed, "\n\nРаундовый ключ:");
+        insertColorText(textPaneKeyBlock, styleRed, "\n\nRound key:");
         insertColorText(textPaneKeyBlock, styleRed, " " + roundKeyForHint);
 
         textPaneXOR.setText(null);
         Style styleXOR = getStyleText(textPaneXOR, Color.BLUE);
         Style styleXorResult = getStyleText(textPaneXOR, Color.BLUE);
-        insertColorText(textPaneXOR, styleXOR, "Результат X:");
+        insertColorText(textPaneXOR, styleXOR, "Result of X:");
         insertColorText(textPaneXOR, styleXorResult, " " + String.valueOf(Conversions.hex(curTemp.getAfter())));
 
         curTemp = stateList.get(3);
 //        textAreaS.setText(null);
 
 //        textAreaS.append(String.valueOf(
-////                "Блок данных: " + Conversions.hex(curTemp.getBefore())) +
-////                "\n\nприменение S-преобразования\n\n" +
-//                "Результат S: " + String.valueOf(Conversions.hex(curTemp.getAfter()))));
+////                "Data block: " + Conversions.hex(curTemp.getBefore())) +
+////                "\n\nApplying the S transformation\n\n" +
+//                "Result of S: " + String.valueOf(Conversions.hex(curTemp.getAfter()))));
         textPaneS.setText(null);
         Style styleS = getStyleText(textPaneS, Color.BLUE);
         Style styleSResult = getStyleText(textPaneS, Color.BLUE);
-        insertColorText(textPaneS, styleS, "Результат S:");
+        insertColorText(textPaneS, styleS, "Result of S:");
         insertColorText(textPaneS, styleSResult, " " + String.valueOf(Conversions.hex(curTemp.getAfter())));
 
         curTemp = stateList.get(4);
 //        textAreaL.setText(null);
 //        textAreaL.append(String.valueOf(
-////                "Блок данных: " + Conversions.hex(curTemp.getBefore())) +
-////                "\n\nприменение L-преобразования\n\n" +
-//                "Результат L: " + String.valueOf(Conversions.hex(curTemp.getAfter()))));
+////                "Data block: " + Conversions.hex(curTemp.getBefore())) +
+////                "\n\nApplying the L transformation\n\n" +
+//                "Result of L: " + String.valueOf(Conversions.hex(curTemp.getAfter()))));
         textPaneL.setText(null);
         Style styleL = getStyleText(textPaneL, Color.RED);
         Style styleLResult = getStyleText(textPaneL, Color.RED);
-        insertColorText(textPaneL, styleL, "Результат L:");
+        insertColorText(textPaneL, styleL, "Result of L:");
         insertColorText(textPaneL, styleLResult, " " + String.valueOf(Conversions.hex(curTemp.getAfter())));
 
         roundBlockData = String.valueOf(Conversions.hex(curTemp.getAfter()));
         tree.setSelectionPath(findTreePath(curTemp));
-        stage.setText("Раунд №1");
+        stage.setText("Round #1");
         nextStep.setEnabled(false);
         previousRound.setEnabled(false);
         roundIdx = 2;
@@ -372,7 +372,7 @@ public class VisualizationKuznyechikRound extends JDialog {
 //            System.out.println(roundIdx + " " + xorIdx + " " + sIdx + " " + lIdx);
 
             if (currentNextRound.getName().equals("Round " + roundIdx)) {
-                stage.setText("Раунд №" + (roundIdx + 1));
+                stage.setText("Round #" + (roundIdx + 1));
                 nextRound.setEnabled(true);
                 previousRound.setEnabled(true);
 //                nextStep.setEnabled(true);
@@ -380,15 +380,15 @@ public class VisualizationKuznyechikRound extends JDialog {
 
 //                textAreaKeyBlock.setText(null);
 //                textAreaKeyBlock.append(
-//                        "БЛОК ДАННЫХ: " + block +
-//                                "\n\nСЕКРЕТНЫЙ КЛЮЧ: " + key +
-//                                "\n\nРАУНДОВЫЙ КЛЮЧ: " + roundKeyForHint
+//                        "Data block: " + block +
+//                                "\n\nSecret key: " + key +
+//                                "\n\nRound key: " + roundKeyForHint
 //                );
 
                 textPaneKeyBlock.setText(null);
                 Style styleRed = getStyleText(textPaneKeyBlock, Color.RED);
 
-                insertColorText(textPaneKeyBlock, styleRed, "Блок данных:");
+                insertColorText(textPaneKeyBlock, styleRed, "Data block:");
                 insertColorText(textPaneKeyBlock, styleRed, " " + String.valueOf(Conversions.hex(currentNextRound.getBefore())));
 
                 roundIdx++;
@@ -404,23 +404,23 @@ public class VisualizationKuznyechikRound extends JDialog {
                 roundKeyForHint = String.valueOf(Conversions.hex(currentNextRound.getAdditional()));
 //                textAreaKeyBlock.setText(null);
 //                textAreaKeyBlock.append(
-//                        "БЛОК ДАННЫХ: " + block +
-//                                "\n\nСЕКРЕТНЫЙ КЛЮЧ: " + key +
-//                                "\n\nРАУНДОВЫЙ КЛЮЧ: " + roundKeyForHint
+//                        "Data block: " + block +
+//                                "\n\nSecret key: " + key +
+//                                "\n\nRound key: " + roundKeyForHint
 //                );
                 textPaneKeyBlock.setText(null);
                 Style styleRed = getStyleText(textPaneKeyBlock, Color.RED);
 
-                insertColorText(textPaneKeyBlock, styleRed, "Блок данных:");
+                insertColorText(textPaneKeyBlock, styleRed, "Data block:");
                 insertColorText(textPaneKeyBlock, styleRed, " " + String.valueOf(Conversions.hex(currentNextRound.getBefore())));
 
-                insertColorText(textPaneKeyBlock, styleRed, "\n\nРаундовый ключ:");
+                insertColorText(textPaneKeyBlock, styleRed, "\n\nRound key:");
                 insertColorText(textPaneKeyBlock, styleRed, " " + roundKeyForHint);
 
                 textPaneXOR.setText(null);
                 Style styleXOR = getStyleText(textPaneXOR, Color.BLUE);
                 Style styleXORResult = getStyleText(textPaneXOR, Color.BLUE);
-                insertColorText(textPaneXOR, styleXOR, "Результат:");
+                insertColorText(textPaneXOR, styleXOR, "Result:");
                 insertColorText(textPaneXOR, styleXORResult, " " + String.valueOf(Conversions.hex(currentNextRound.getAfter())));
                 nextStep.setEnabled(false);
                 nextRound.setEnabled(false);
@@ -447,20 +447,20 @@ public class VisualizationKuznyechikRound extends JDialog {
 //            System.out.println("DEBUG indexRounds[roundArrIdx] = "+ indexRounds[roundArrIdx]);
             if (currentPrevRound.getName()
                     .equals("Round " + (roundIdx - 2))) {
-                stage.setText("Раунд №" + (roundIdx - 1));
+                stage.setText("Round #" + (roundIdx - 1));
                 nextRound.setEnabled(true);
 //                previousRound.setEnabled(false);
 //                nextStep.setEnabled(true);
 //                nextRound.setEnabled(false);
 //                textAreaKeyBlock.setText(null);
 //                textAreaKeyBlock.append(
-//                        "БЛОК ДАННЫХ: " + block +
-//                                "\n\nСЕКРЕТНЫЙ КЛЮЧ: " + key
+//                        "Data block: " + block +
+//                                "\n\nSecret key: " + key
 //                );
                 textPaneKeyBlock.setText(null);
                 Style styleRed = getStyleText(textPaneKeyBlock, Color.RED);
 
-                insertColorText(textPaneKeyBlock, styleRed, "Блок данных:");
+                insertColorText(textPaneKeyBlock, styleRed, "Data block:");
                 insertColorText(textPaneKeyBlock, styleRed, " " + String.valueOf(Conversions.hex(currentPrevRound.getBefore())));
 
                 roundIdx--;
@@ -484,7 +484,7 @@ public class VisualizationKuznyechikRound extends JDialog {
 //            previousStep.setEnabled(id > 0);
 //            nextStep.setEnabled(id < 37);
             if (id == 6) {
-                stage.setText("Раунд №2");
+                stage.setText("Round #2");
             }
 //            System.out.println("DEBUG nex id: " + id);
             State current = stateList.get(id);
@@ -515,28 +515,28 @@ public class VisualizationKuznyechikRound extends JDialog {
                     .equals("XOR with round key " + xorIdx)) {
 //                textAreaXOR.setText(null);
 //                textAreaXOR.append(
-////                                "Блок данных: " + String.valueOf(Conversions.hex(current.getBefore()) +
-////                                "\n\nприменение операции XOR поэлементно между блоком данных и ключом раунда\n\n" +
-//                                "Результат X: " + String.valueOf(Conversions.hex(current.getAfter())));
+////                                "Data block: " + String.valueOf(Conversions.hex(current.getBefore()) +
+////                                "\n\nThe XOR operation is applied between the data block and the round key\n\n" +
+//                                "Result of X: " + String.valueOf(Conversions.hex(current.getAfter())));
                 textPaneXOR.setText(null);
                 Style styleXOR = getStyleText(textPaneXOR, Color.BLUE);
                 Style styleXorResult = getStyleText(textPaneXOR, Color.BLUE);
-                insertColorText(textPaneXOR, styleXOR, "Результат X:");
+                insertColorText(textPaneXOR, styleXOR, "Result of X:");
                 insertColorText(textPaneXOR, styleXorResult, " " + String.valueOf(Conversions.hex(current.getAfter())));
                 roundKeyForHint = String.valueOf(Conversions.hex(current.getAdditional()));
 //                textAreaKeyBlock.setText(null);
 //                textAreaKeyBlock.append(
-//                        "БЛОК ДАННЫХ: " + block +
-//                                "\n\nСЕКРЕТНЫЙ КЛЮЧ: " + key +
-//                                "\n\nРАУНДОВЫЙ КЛЮЧ: " + roundKeyForHint
+//                        "Data block: " + block +
+//                                "\n\nSecret key: " + key +
+//                                "\n\nRound key: " + roundKeyForHint
 //                );
                 textPaneKeyBlock.setText(null);
                 Style styleRed = getStyleText(textPaneKeyBlock, Color.RED);
 
-                insertColorText(textPaneKeyBlock, styleRed, "Блок данных:");
+                insertColorText(textPaneKeyBlock, styleRed, "Data block:");
                 insertColorText(textPaneKeyBlock, styleRed, " " + String.valueOf(Conversions.hex(current.getBefore())));
 
-                insertColorText(textPaneKeyBlock, styleRed, "\n\nРаундовый ключ:");
+                insertColorText(textPaneKeyBlock, styleRed, "\n\nRound key:");
                 insertColorText(textPaneKeyBlock, styleRed, " " + roundKeyForHint);
 
                 xorIdx++;
@@ -546,7 +546,7 @@ public class VisualizationKuznyechikRound extends JDialog {
                 textPaneS.setText(null);
                 Style styleS = getStyleText(textPaneS, Color.BLUE);
                 Style styleSResult = getStyleText(textPaneS, Color.BLUE);
-                insertColorText(textPaneS, styleS, "Результат S:");
+                insertColorText(textPaneS, styleS, "Result of S:");
                 insertColorText(textPaneS, styleSResult, " " + String.valueOf(Conversions.hex(current.getAfter())));
                 sIdx++;
 
@@ -556,7 +556,7 @@ public class VisualizationKuznyechikRound extends JDialog {
                 System.out.println("DEBUG L: " + id);
                 Style styleL = getStyleText(textPaneS, Color.RED);
                 Style styleLResult = getStyleText(textPaneS, Color.RED);
-                insertColorText(textPaneL, styleL, "Результат L:");
+                insertColorText(textPaneL, styleL, "Result of L:");
                 insertColorText(textPaneL, styleLResult, " " + String.valueOf(Conversions.hex(current.getAfter())));
 
                 roundBlockData = String.valueOf(Conversions.hex(current.getAfter()));
@@ -569,7 +569,7 @@ public class VisualizationKuznyechikRound extends JDialog {
                 textPaneXOR.setText(null);
                 Style styleXOR = getStyleText(textPaneS, Color.BLUE);
                 Style styleXORResult = getStyleText(textPaneS, Color.BLUE);
-                insertColorText(textPaneL, styleXOR, "Результат X:");
+                insertColorText(textPaneL, styleXOR, "Result of X:");
                 insertColorText(textPaneL, styleXORResult, " " + String.valueOf(Conversions.hex(current.getAfter())));
 
                 nextRound.setEnabled(false);

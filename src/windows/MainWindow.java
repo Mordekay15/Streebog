@@ -1,4 +1,4 @@
-package windows;
+п»їpackage windows;
 
 import algorithms.*;
 import ciphers.CipherHolder;
@@ -31,7 +31,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow(String name, CipherHolder... holders) {
 //        super(String.format("%s", Arrays.stream(holders).map(CipherHolder::getName).collect(Collectors.joining(", "))));
-        super("Литорея");
+        super("Litorea");
         ciphers = Arrays.stream(holders).collect(Collectors.toList());
 
 
@@ -47,7 +47,7 @@ public class MainWindow extends JFrame {
             getRootPane().setDefaultButton(support);
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Ошибка инициализации приложения", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Application initialization error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -57,7 +57,7 @@ public class MainWindow extends JFrame {
         mainContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         desktop = new JDesktopPane();
-        // TODO: русская локализация (+ : поменять функцию createEmpty() на createReadme())
+        // TODO: add a welcome screen (+ : replace the createEmpty() call with createReadme())
         Objects.requireNonNull(TextFileFrame.createReadme()).display(desktop);
 
         mainContainer.add(desktop);
@@ -70,31 +70,31 @@ public class MainWindow extends JFrame {
         support.setFocusPainted(false);
         support.setBorder(new RoundedBorder(5));
 
-        JMenuItem openSystem = new JMenu("Открыть файл");
-        openSystem.add(MenuItemConstructor.get(desktop).fileCreateItem("Открыть как текстовый (.txt)", () -> TextFileFrame.createFromFile(this)));
-        openSystem.add(MenuItemConstructor.get(desktop).fileCreateItem("Открыть как бинарный (.bin)", () -> BinaryFileFrame.createFromFile(this)));
-        openSystem.add(MenuItemConstructor.get(desktop).fileCreateItem("Открыть как изображение (.png, .bmp)", () -> ImageFileFrame.createFromFile(this)));
-        openSystem.add(MenuItemConstructor.get(desktop).fileCreateItem("Открыть справочный файл (ReadMe.txt)", TextFileFrame::createReadme));
+        JMenuItem openSystem = new JMenu("Open file");
+        openSystem.add(MenuItemConstructor.get(desktop).fileCreateItem("Open as text (.txt)", () -> TextFileFrame.createFromFile(this)));
+        openSystem.add(MenuItemConstructor.get(desktop).fileCreateItem("Open as binary (.bin)", () -> BinaryFileFrame.createFromFile(this)));
+        openSystem.add(MenuItemConstructor.get(desktop).fileCreateItem("Open as image (.png, .bmp)", () -> ImageFileFrame.createFromFile(this)));
+        openSystem.add(MenuItemConstructor.get(desktop).fileCreateItem("Open help file (ReadMe.txt)", TextFileFrame::createReadme));
 
-        JMenu createFile = new JMenu("Создать файл");
-        createFile.add(MenuItemConstructor.get(desktop).fileCreateItem("Создать текстовый (.txt)", TextFileFrame::createEmpty));
-        createFile.add(MenuItemConstructor.get(desktop).fileCreateItem("Создать бинарный (.bin)", BinaryFileFrame::createEmpty));
+        JMenu createFile = new JMenu("New file");
+        createFile.add(MenuItemConstructor.get(desktop).fileCreateItem("Create text file (.txt)", TextFileFrame::createEmpty));
+        createFile.add(MenuItemConstructor.get(desktop).fileCreateItem("Create binary file (.bin)", BinaryFileFrame::createEmpty));
 
-        JMenu file = new JMenu("Файл");
+        JMenu file = new JMenu("File");
         file.add(createFile);
         file.add(openSystem);
 
 
 
-        JMenu encrypt = new JMenu("Зашифрование");
+        JMenu encrypt = new JMenu("Encryption");
         for (CipherHolder cipher : ciphers) {
             String name = cipher.getName();
             switch (name) {
                 case "Kuznyechik":
-                    name = "Кузнечик";
+                    name = "Kuznyechik";
                     break;
                 case "Magma":
-                    name = "Магма";
+                    name = "Magma";
                     break;
             }
             JMenu encryptor = new JMenu(name);
@@ -103,34 +103,34 @@ public class MainWindow extends JFrame {
                 String holderName = holder.getName();
                 switch (holderName) {
                     case "ECB<Kuznyechik>":
-                        holderName = "Простая замена";
+                        holderName = "Electronic Codebook (ECB)";
                         break;
                     case "CBC<Kuznyechik>":
-                        holderName = "Простая замена с зацеплением";
+                        holderName = "Cipher Block Chaining (CBC)";
                         break;
                     case "CFB<Kuznyechik>":
-                        holderName = "Гаммирование с обратной связью по шифртексту";
+                        holderName = "Cipher Feedback (CFB)";
                         break;
                     case "CTR<Kuznyechik>":
-                        holderName = "Гаммирование";
+                        holderName = "Counter (CTR)";
                         break;
                     case "OFB<Kuznyechik>":
-                        holderName = "Гаммирование с обратной связью по выходу";
+                        holderName = "Output Feedback (OFB)";
                         break;
                     case "ECB<Magma>":
-                        holderName = "Простая замена";
+                        holderName = "Electronic Codebook (ECB)";
                         break;
                     case "CBC<Magma>":
-                        holderName = "Простая замена с зацеплением";
+                        holderName = "Cipher Block Chaining (CBC)";
                         break;
                     case "CFB<Magma>":
-                        holderName = "Гаммирование с обратной связью по шифртексту";
+                        holderName = "Cipher Feedback (CFB)";
                         break;
                     case "CTR<Magma>":
-                        holderName = "Гаммирование";
+                        holderName = "Counter (CTR)";
                         break;
                     case "OFB<Magma>":
-                        holderName = "Гаммирование с обратной связью по выходу";
+                        holderName = "Output Feedback (OFB)";
                         break;
                 }
                 encryptor.add(MenuItemConstructor.get(desktop).encodeDecodeItem(holderName, holder, MenuItemConstructor.Mode.ENCRYPT));
@@ -138,15 +138,15 @@ public class MainWindow extends JFrame {
             encrypt.add(encryptor);
         }
 
-        JMenu decrypt = new JMenu("Расшифрование");
+        JMenu decrypt = new JMenu("Decryption");
         for (CipherHolder cipher : ciphers) {
             String name = cipher.getName();
             switch (name) {
                 case "Kuznyechik":
-                    name = "Кузнечик";
+                    name = "Kuznyechik";
                     break;
                 case "Magma":
-                    name = "Магма";
+                    name = "Magma";
                     break;
             }
             JMenu decryptor = new JMenu(name);
@@ -155,34 +155,34 @@ public class MainWindow extends JFrame {
                 String holderName = holder.getName();
                 switch (holderName) {
                     case "ECB<Kuznyechik>":
-                        holderName = "Простая замена";
+                        holderName = "Electronic Codebook (ECB)";
                         break;
                     case "CBC<Kuznyechik>":
-                        holderName = "Простая замена с зацеплением";
+                        holderName = "Cipher Block Chaining (CBC)";
                         break;
                     case "CFB<Kuznyechik>":
-                        holderName = "Гаммирование с обратной связью по шифртексту";
+                        holderName = "Cipher Feedback (CFB)";
                         break;
                     case "CTR<Kuznyechik>":
-                        holderName = "Гаммирование";
+                        holderName = "Counter (CTR)";
                         break;
                     case "OFB<Kuznyechik>":
-                        holderName = "Гаммирование с обратной связью по выходу";
+                        holderName = "Output Feedback (OFB)";
                         break;
                     case "ECB<Magma>":
-                        holderName = "Простая замена";
+                        holderName = "Electronic Codebook (ECB)";
                         break;
                     case "CBC<Magma>":
-                        holderName = "Простая замена с зацеплением";
+                        holderName = "Cipher Block Chaining (CBC)";
                         break;
                     case "CFB<Magma>":
-                        holderName = "Гаммирование с обратной связью по шифртексту";
+                        holderName = "Cipher Feedback (CFB)";
                         break;
                     case "CTR<Magma>":
-                        holderName = "Гаммирование";
+                        holderName = "Counter (CTR)";
                         break;
                     case "OFB<Magma>":
-                        holderName = "Гаммирование с обратной связью по выходу";
+                        holderName = "Output Feedback (OFB)";
                         break;
                 }
                 decryptor.add(MenuItemConstructor.get(desktop).encodeDecodeItem(holderName, holder, MenuItemConstructor.Mode.DECRYPT));
@@ -190,39 +190,39 @@ public class MainWindow extends JFrame {
             decrypt.add(decryptor);
         }
 
-        JMenu authentication = new JMenu("Аутентификация");
+        JMenu authentication = new JMenu("Authentication");
 
-        JMenu subscription = new JMenu("Имитовставка");
+        JMenu subscription = new JMenu("Signing");
         for (CipherHolder cipher : ciphers) {
             String name = cipher.getName();
             switch (name) {
                 case "Kuznyechik":
-                    name = "Кузнечик";
+                    name = "Kuznyechik";
                     break;
                 case "Magma":
-                    name = "Магма";
+                    name = "Magma";
                     break;
             }
             subscription.add(MenuItemConstructor.get(desktop).subscribeItem(name, cipher));
         }
         authentication.add(subscription);
 
-        JMenu streebog = new JMenu("Хэширование");
+        JMenu streebog = new JMenu("Hashing");
 
         for (HashFunctionHolder hash : hashfunctions) {
             String name = hash.getName();
             switch (name){
                 case "Streebog":
-                    streebog.add(MenuItemConstructor.get(desktop).streebogItem("Стрибог-256", 256, hash));
-                    //streebog.add(MenuItemConstructor.get(desktop).streebogItem("Стрибог-512", 512, hash));//.setEnabled(false);
+                    streebog.add(MenuItemConstructor.get(desktop).streebogItem("Streebog-256", 256, hash));
+                    //streebog.add(MenuItemConstructor.get(desktop).streebogItem("Streebog-512", 512, hash));//.setEnabled(false);
             }
         }
-        // TODO: Реализовать класс Streebog, его бизнес-логику
+        // TODO: implement Streebog output for the data stream
 
         authentication.add(streebog);
 
 
-        JMenu hmac = new JMenu("HMAC код");
+        JMenu hmac = new JMenu("HMAC code");
         //JMenuItem hmac256 = new JMenuItem("HMAC-256");
         //JMenuItem hmac512 = new JMenuItem("HMAC-512");
         hmac.add(MenuItemConstructor.get(desktop).HMACItem("HMAC-256", 256));
@@ -233,16 +233,16 @@ public class MainWindow extends JFrame {
 
         authentication.add(hmac).setEnabled(true);
 
-        JMenu analysis = new JMenu("Анализ");
+        JMenu analysis = new JMenu("Analysis");
         analysis.setEnabled(true);
         for (CipherHolder cipher : ciphers) {
             String name = cipher.getName();
             switch (name) {
                 case "Kuznyechik":
-                    name = "Кузнечик";
+                    name = "Kuznyechik";
                     break;
                 case "Magma":
-                    name = "Магма";
+                    name = "Magma";
                     break;
             }
             JMenu analyzer = new JMenu(name);
@@ -251,34 +251,34 @@ public class MainWindow extends JFrame {
                 String holderName = holder.getName();
                 switch (holderName) {
                     case "ECB<Kuznyechik>":
-                        holderName = "Простая замена";
+                        holderName = "Electronic Codebook (ECB)";
                         break;
                     case "CBC<Kuznyechik>":
-                        holderName = "Простая замена с зацеплением";
+                        holderName = "Cipher Block Chaining (CBC)";
                         break;
                     case "CFB<Kuznyechik>":
-                        holderName = "Гаммирование с обратной связью по шифртексту";
+                        holderName = "Cipher Feedback (CFB)";
                         break;
                     case "CTR<Kuznyechik>":
-                        holderName = "Гаммирование";
+                        holderName = "Counter (CTR)";
                         break;
                     case "OFB<Kuznyechik>":
-                        holderName = "Гаммирование с обратной связью по выходу";
+                        holderName = "Output Feedback (OFB)";
                         break;
                     case "ECB<Magma>":
-                        holderName = "Простая замена";
+                        holderName = "Electronic Codebook (ECB)";
                         break;
                     case "CBC<Magma>":
-                        holderName = "Простая замена с зацеплением";
+                        holderName = "Cipher Block Chaining (CBC)";
                         break;
                     case "CFB<Magma>":
-                        holderName = "Гаммирование с обратной связью по шифртексту";
+                        holderName = "Cipher Feedback (CFB)";
                         break;
                     case "CTR<Magma>":
-                        holderName = "Гаммирование";
+                        holderName = "Counter (CTR)";
                         break;
                     case "OFB<Magma>":
-                        holderName = "Гаммирование с обратной связью по выходу";
+                        holderName = "Output Feedback (OFB)";
                         break;
                 }
                 analyzer.add(MenuItemConstructor.get(desktop).analyzeItem(holderName, holder));
@@ -286,27 +286,27 @@ public class MainWindow extends JFrame {
             analysis.add(analyzer).setEnabled(false);
         }
 
-        JMenu analysisBlockCipherAttack = new JMenu("Атака на блочный шифр");
-        JMenuItem diffAnalysisAttack = new JMenuItem("Дифференциальный анализ");
-        JMenuItem linearAnalysisAttack = new JMenuItem("Линейный анализ");
+        JMenu analysisBlockCipherAttack = new JMenu("Attacks on the block cipher");
+        JMenuItem diffAnalysisAttack = new JMenuItem("Differential cryptanalysis");
+        JMenuItem linearAnalysisAttack = new JMenuItem("Linear cryptanalysis");
         analysisBlockCipherAttack.add(diffAnalysisAttack);
         analysisBlockCipherAttack.add(linearAnalysisAttack);
 
-        JMenu analysisCipherModeAttack = new JMenu("Атака на режим работы шифра");
-        JMenuItem ecbAttack = new JMenuItem("Простая замена");
-        JMenuItem cbcAttack = new JMenuItem("Простая замена с зацеплением");
+        JMenu analysisCipherModeAttack = new JMenu("Attacks on the cipher mode");
+        JMenuItem ecbAttack = new JMenuItem("Electronic Codebook (ECB)");
+        JMenuItem cbcAttack = new JMenuItem("Cipher Block Chaining (CBC)");
         analysisCipherModeAttack.add(ecbAttack);
         analysisCipherModeAttack.add(cbcAttack);
 
-        JMenu analysisHashFunctionAttack = new JMenu("Атака на хэш-функцию");
-        JMenuItem rainbowAttack = new JMenuItem("На основе \"радужных таблиц\"");
-        JMenuItem birthDayAttack = new JMenuItem("На основе \"дней рождения\"");
+        JMenu analysisHashFunctionAttack = new JMenu("Attacks on hash functions");
+        JMenuItem rainbowAttack = new JMenuItem("Rainbow table attack");
+        JMenuItem birthDayAttack = new JMenuItem("Birthday attack");
         analysisHashFunctionAttack.add(rainbowAttack);
         analysisHashFunctionAttack.add(birthDayAttack);
 
 
-        JMenu analysisTools = new JMenu("Инструменты");
-        JMenuItem hammingDist = new JMenuItem("Расстояние Хэмминга");
+        JMenu analysisTools = new JMenu("Tools");
+        JMenuItem hammingDist = new JMenuItem("Hamming distance");
         analysisTools.add(hammingDist);
 
         analysis.add(analysisBlockCipherAttack);
@@ -314,23 +314,23 @@ public class MainWindow extends JFrame {
         analysis.add(analysisHashFunctionAttack);
         analysis.add(analysisTools);
 
-        JMenu visualization = new JMenu("Визуализация");
-        JMenu visKuznyechik = new JMenu("Шифр 'Кузнечик'");
-        JMenu visMagma = new JMenu("Шифр 'Магма'");
-        visKuznyechik.add(MenuItemConstructor.get(desktop).visualizeKuznyechikRoundItem("Раундовые преобразования", ciphers.get(0)));
-        visKuznyechik.add(MenuItemConstructor.get(desktop).visualizeExpandKeyItem("Развертывание ключа", ciphers.get(0)));
-        visKuznyechik.add(MenuItemConstructor.get(desktop).visualizeRegister("Регистр сдвига", ciphers.get(0))).setEnabled(false);
+        JMenu visualization = new JMenu("Visualization");
+        JMenu visKuznyechik = new JMenu("Kuznyechik cipher");
+        JMenu visMagma = new JMenu("Magma cipher");
+        visKuznyechik.add(MenuItemConstructor.get(desktop).visualizeKuznyechikRoundItem("Round transformation", ciphers.get(0)));
+        visKuznyechik.add(MenuItemConstructor.get(desktop).visualizeExpandKeyItem("Key expansion", ciphers.get(0)));
+        visKuznyechik.add(MenuItemConstructor.get(desktop).visualizeRegister("Shift register", ciphers.get(0))).setEnabled(false);
 
-        visMagma.add(MenuItemConstructor.get(desktop).visualizeMagmaRoundItem("Раундовые преобразования", ciphers.get(1)));
-        visMagma.add(MenuItemConstructor.get(desktop).visualizeMagmaKeyItem("Развертывание ключа", ciphers.get(1)));
+        visMagma.add(MenuItemConstructor.get(desktop).visualizeMagmaRoundItem("Round transformation", ciphers.get(1)));
+        visMagma.add(MenuItemConstructor.get(desktop).visualizeMagmaKeyItem("Key expansion", ciphers.get(1)));
 
 
-        JMenu visHashFunction = new JMenu("Хэш-функция");
-        //JMenuItem visStreebog256 = new JMenuItem("Стрибог-256");
-        //JMenuItem visStreebog512 = new JMenuItem("Стрибог-512");
+        JMenu visHashFunction = new JMenu("Hash functions");
+        //JMenuItem visStreebog256 = new JMenuItem("Streebog-256");
+        //JMenuItem visStreebog512 = new JMenuItem("Streebog-512");
 
-        visHashFunction.add(MenuItemConstructor.get(desktop).visualizeStreebogItem("Стрибог-256", 256, hashfunctions.get(0)));
-        //visHashFunction.add(MenuItemConstructor.get(desktop).visualizeStreebogItem("Стрибог-512", 512, hashfunctions.get(0))).setEnabled(false);
+        visHashFunction.add(MenuItemConstructor.get(desktop).visualizeStreebogItem("Streebog-256", 256, hashfunctions.get(0)));
+        //visHashFunction.add(MenuItemConstructor.get(desktop).visualizeStreebogItem("Streebog-512", 512, hashfunctions.get(0))).setEnabled(false);
         //visHashFunction.add(visStreebog256);
         //visHashFunction.add(visStreebog512);
 

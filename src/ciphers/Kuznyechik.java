@@ -93,7 +93,7 @@ public final class Kuznyechik extends Cipher {
                 addStep(String.format("Constant computing %d", j), "constant", new byte[]{(byte) (j + 8 * i)});
 
                 byte[] constant = getConstant(j + (8 * i));
-//                System.out.println("\nКонстанта\n" + Conversions.hex(constant));
+//                System.out.println("\nConstant\n" + Conversions.hex(constant));
 
                 nextStep(String.format("XOR key 1 with constant %d", j), "xor_with_constant", key1, constant);
                 byte[] internal = Computing.XOR(key1, constant);

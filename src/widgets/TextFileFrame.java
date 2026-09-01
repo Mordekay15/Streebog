@@ -43,10 +43,10 @@ public class TextFileFrame extends FileFrame {
     }
 
     public static TextFileFrame createReadme() {
-        TextFileFrame readme = new TextFileFrame(Conversions.raw("Добро пожаловать в  приложение Литорея (LitoreR), которое поможет\n" +
-                "самостоятельно изучить отечественные криптопреобразования.\n" +
+        TextFileFrame readme = new TextFileFrame(Conversions.raw("Welcome to the LitoreR app, which will help you\n" +
+                "independently explore domestic cryptographic transformations.\n" +
                 "\n" +
-                "Версия 0.2 - предварительная с функциональностью ограниченной только инструментами исследования российских стандартов шифрования Магма и Кузнечик во всех предусмотренных режимах работы с файлами данных."), "ReadMe");
+                "Version 0.2 is a preliminary release with functionality limited to tools for exploring the Russian encryption standards Magma, Kuznetchik and Streebog across all supported data file operation modes."), "ReadMe");
         readme.setBackground(Color.RED);
         return readme;
     }
