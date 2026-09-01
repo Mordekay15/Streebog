@@ -27,6 +27,12 @@ public final class Streebog extends HashFunction{
         } else {
             java.util.Arrays.fill(this.h, (byte) 0x00);
         }
+        
+        java.util.Arrays.fill(this.N, (byte) 0x00);
+        java.util.Arrays.fill(this.Sigma, (byte) 0x00);
+        java.util.Arrays.fill(this.buffer, (byte) 0x00);
+        this.buf_size = 0;
+
         addStep("Init","init", this.h);
         finalizeStep(this.h);
 
