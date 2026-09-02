@@ -138,8 +138,6 @@ by role.
 | `Visualization → Magma cipher → Key expansion` | Round key schedule for all 32 rounds |
 | `Visualization → Hash functions → Streebog-256` | Guided three-stage walkthrough of the full hash computation |
 
-Buttons labelled `Transformation: '...'` open explanatory hint dialogs — see
-[Hint Files](#hint-files).
 
 ---
 
