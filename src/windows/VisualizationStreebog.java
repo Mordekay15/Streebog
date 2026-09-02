@@ -47,12 +47,12 @@ public class VisualizationStreebog extends JDialog {
     private final JButton XOR1 = new JButton("XOR");
     private final JButton nextStep = new JButton(">");
     private final JButton backStep = new JButton("<");
-    private final JButton back = new JButton("Назад");
+    private final JButton back = new JButton("Back");
     ImageIcon icon = new ImageIcon("D:\\IdeaProjects\\Crypto_ETU_1\\src\\main\\resources\\files\\images\\square.png");
     private final JButton square1 = new JButton(icon);
     private final JButton square2 = new JButton(icon);
-    private final JButton endOfTheBlock = new JButton("Следующий блок");
-    private final JButton help = new JButton("Справка");
+    private final JButton endOfTheBlock = new JButton("Next block");
+    private final JButton help = new JButton("Help");
     private final String html_text = "<html><div style='width: %dpx; padding: 6px;font-size:%dpx;'>%s</div></html>";
     private int countG = 2;
     JPanel GPanel = new JPanel();
@@ -64,7 +64,7 @@ public class VisualizationStreebog extends JDialog {
     Color highlightColor = new Color(0x95E5FF);
 
     public VisualizationStreebog(JDesktopPane parent, State state, byte[] result) {
-        super((Frame) SwingUtilities.getWindowAncestor(parent), "Визуализация хеш-функции Стрибог", false);
+        super((Frame) SwingUtilities.getWindowAncestor(parent), "Streebog Hash Function Visualization", false);
 
         stateList = createStateList(state);
 
@@ -88,21 +88,21 @@ public class VisualizationStreebog extends JDialog {
     private void start_screen() {
         JPanel startPanel = new JPanel();
         JLabel theory = new JLabel("<html><body style='width: 600px; padding: 10px;font-size:14px;'>" +
-                "<h1>Немного теории:</h1>" +
-                "<h2>Основу хеш-функции «Стрибог» составляет - функция сжатия (G-функция)</h2>" +
-                "<p>В целом хеширование производится в три этапа:</p>" +
+                "<h1>A bit of theory:</h1>" +
+                "<h2>The Streebog hash function is built around the compression function (the G-function)</h2>" +
+                "<p>Overall, hashing is performed in three stages:</p>" +
                 "<ol>" +
-                "<li>Первый этап — инициализация всех нужных параметров.</li>" +
-                "<li>Второй этап состоит из функции сжатия и двух операций исключающего ИЛИ.</li>" +
-                "<li>Третий этап — завершающее преобразование: функция сжатия применяется к сумме всех блоков сообщения и дополнительно хешируется длина сообщения.</li>" +
+                "<li>The first stage is the initialization of all required parameters.</li>" +
+                "<li>The second stage consists of the compression function and two exclusive OR operations.</li>" +
+                "<li>The third stage is the final transformation: the compression function is applied to the sum of all message blocks, and the message length is hashed in addition.</li>" +
                 "</ol>" +
-                "<p>Далее будет подробно разобран каждый этап!</p>" +
+                "<p>Each stage is examined in detail below!</p>" +
                 "</body></html>");
         theory.setFont(font);
-        theory.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Добавление отступов (верх, лево, низ, право)
+        theory.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Adding padding (top, left, bottom, right)
         startPanel.add(theory, BorderLayout.NORTH);
 
-        JButton nextButton = new JButton("Перейти к первому этапу");
+        JButton nextButton = new JButton("Go to the first stage");
         nextButton.setBackground(customBlue);
         nextButton.addActionListener(e -> showPanel("initPanel"));
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -121,9 +121,9 @@ public class VisualizationStreebog extends JDialog {
         initPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JLabel resultLabel = new JLabel();
-        resultLabel.setText(String.format("<html><h1 style='font-family:Arial;'>Этап 1. Инициализация</h1>Так как задана длина хеша равная <span style" +
-                "='font-weight:bold;font-size:14px;font-family:Arial;'> %d </span>,то при инициализации хеш-код имеет " +
-                "следующий вид: <br/><br/><span style='color:#2E88A6; font-size:14px;font-family:Arial;'>%s</span></html>", 256, Conversions.hex(stateList.get(1).getAfter())));//Arrays.toString(stateList.get(1).getAfter()).replaceAll("[\\[\\]]", "")));
+        resultLabel.setText(String.format("<html><h1 style='font-family:Arial;'>Stage 1. Initialization</h1>Since the requested hash length is <span style" +
+                "='font-weight:bold;font-size:14px;font-family:Arial;'> %d </span>, the hash code after initialization " +
+                "looks as follows: <br/><br/><span style='color:#2E88A6; font-size:14px;font-family:Arial;'>%s</span></html>", 256, Conversions.hex(stateList.get(1).getAfter())));//Arrays.toString(stateList.get(1).getAfter()).replaceAll("[\\[\\]]", "")));
         initPanel.add(resultLabel, BorderLayout.NORTH);
 
         JPanel buttonPanel = add_buttons("stage2Panel", "startPanel");
@@ -139,11 +139,11 @@ public class VisualizationStreebog extends JDialog {
 
     private JPanel add_buttons(String next, String prev) {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton nextButton = new JButton("Продолжить");
+        JButton nextButton = new JButton("Continue");
         nextButton.setBackground(customBlue);
         nextButton.addActionListener(e -> showPanel(next));
 
-        JButton prevButton = new JButton("Назад");
+        JButton prevButton = new JButton("Back");
         prevButton.addActionListener(e -> showPanel(prev));
         prevButton.setBackground(customBlue);
 
@@ -157,16 +157,16 @@ public class VisualizationStreebog extends JDialog {
         stage2Panel.setBackground(Color.WHITE);
         stage2Panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JLabel stage2 = new JLabel("<html><body style='font-size:14px;'><h1>Этап 2</h1>" +
-                "<p>Второй этап состоит из:</p>"+
-                "<ul><li>Функции сжатия G. Последовательность вычислений:<ol>" +
-                "<li>XOR - Сложение двух двоичных векторов по модулю 2</li>" +
-                "<li>S   - Нелинейное биективное преобразование</li>" +
-                "<li>P   - Перестановка байтов</li>" +
-                "<li>L   - Линейное преобразование</li>" +
-                "<li>E   - Функцию преобразования, в которой высчитываются раундовые ключи</li>" +
-                "<li>XOR - Сложение двух двоичных векторов по модулю 2</li></ol></li>" +
-                "<li>Побитовое исключающее ИЛИ над 512-битными блоками</li></ul>" +
+        JLabel stage2 = new JLabel("<html><body style='font-size:14px;'><h1>Stage 2</h1>" +
+                "<p>The second stage consists of:</p>"+
+                "<ul><li>The compression function G. Sequence of computations:<ol>" +
+                "<li>XOR - Addition of two binary vectors modulo 2</li>" +
+                "<li>S   - Non-linear bijective transformation</li>" +
+                "<li>P   - Byte permutation</li>" +
+                "<li>L   - Linear transformation</li>" +
+                "<li>E   - The transformation function that computes the round keys</li>" +
+                "<li>XOR - Addition of two binary vectors modulo 2</li></ol></li>" +
+                "<li>Bitwise exclusive OR over 512-bit blocks</li></ul>" +
                 "</body></html>");
         stage2Panel.add(stage2, BorderLayout.NORTH);
 
@@ -188,7 +188,7 @@ public class VisualizationStreebog extends JDialog {
         this.m.setText(String.format(html_text, 190, 9, "Data: "+Conversions.hex(stateList.get(2).getBefore())));
 
         this.stage_number.setFont(new Font("Arial", Font.BOLD, 23));
-        this.stage_number.setText("Этап 2");
+        this.stage_number.setText("Stage 2");
         this.afterXOR.setText(null);
         this.afterS.setText(null);
         this.afterP.setText(null);
@@ -331,13 +331,13 @@ public class VisualizationStreebog extends JDialog {
         finalPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JLabel resultLabel = new JLabel();
-        resultLabel.setText(String.format("<html><h1>Результат хеширования</h1>Хеш-код имеет следующий вид: <br/><br/>" +
+        resultLabel.setText(String.format("<html><h1>Hashing result</h1>The hash code is as follows: <br/><br/>" +
                 "<span style='color:#2E88A6; font-size:14px;'>%s</span></html>", Conversions.hex(stateList.get(stateList.size()-1).getAfter())));
         finalPanel.add(resultLabel, BorderLayout.NORTH);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(Color.WHITE);
-        JButton prevButton = new JButton("В начало");
+        JButton prevButton = new JButton("Back to start");
         prevButton.setBackground(customBlue);
         prevButton.addActionListener(e -> showPanel("startPanel"));
 
@@ -437,10 +437,10 @@ public class VisualizationStreebog extends JDialog {
                 this.sigma.setText(String.format(html_text, 190, 9, "Sigma: " + Conversions.hex(stateList.get(countG+9).getBefore())));
 
                 if(Objects.equals(current.getID(), "streebog_3")) {
-                    this.stage_number.setText("Этап 3");
+                    this.stage_number.setText("Stage 3");
                 }
                 else {
-                    this.stage_number.setText("Этап 2");
+                    this.stage_number.setText("Stage 2");
                 }
                 break;
             }
@@ -495,10 +495,10 @@ public class VisualizationStreebog extends JDialog {
                 this.m.setText(String.format("<html><div style='width: 200px; padding: 6px;font-size:9px;'>Data:<br/>%s</div></html>"
                         , Conversions.hex(stateList.get(countG-8).getBefore())));
                 if(Objects.equals(current.getID(), "streebog_3")) {
-                    this.stage_number.setText("Этап 3");
+                    this.stage_number.setText("Stage 3");
                 }
                 else {
-                    this.stage_number.setText("Этап 2");
+                    this.stage_number.setText("Stage 2");
                 }
                 break;
         }
@@ -534,10 +534,10 @@ public class VisualizationStreebog extends JDialog {
         this.m.setText(String.format("<html><div style='width: 200px; padding: 6px;font-size:9px;'>Data:<br/>%s</div></html>"
                 , Conversions.hex(stateList.get(countG).getBefore())));
         if(Objects.equals(current.getID(), "streebog_3")) {
-            this.stage_number.setText("Этап 3");
+            this.stage_number.setText("Stage 3");
         }
         else {
-            this.stage_number.setText("Этап 2");
+            this.stage_number.setText("Stage 2");
         }
     }
 

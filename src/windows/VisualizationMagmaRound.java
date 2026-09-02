@@ -46,7 +46,7 @@ public class VisualizationMagmaRound extends JDialog {
     private final JButton nextStep = new JButton(">");
     private final JButton nextRound = new JButton(">>");
     private final JButton previousRound = new JButton("<<");
-    private final JLabel stage = new JLabel("Раунд _", SwingConstants.CENTER);
+    private final JLabel stage = new JLabel("Round #_", SwingConstants.CENTER);
 
 
     private JTextPane fieldRoundBeforeL = new JTextPane();
@@ -81,18 +81,18 @@ public class VisualizationMagmaRound extends JDialog {
     private JTextPane fieldViz26 = new JTextPane();
     private JTextPane fieldViz27 = new JTextPane();
 
-    private final JButton addRoundKeyHint = new JButton("Преобразование: 'сложение по модулю 2^32'");
+    private final JButton addRoundKeyHint = new JButton("Transformation: 'addition modulo 2^32'");
 
-    private final JButton tableHint = new JButton("Преобразование: 'подстановка S'");
-    private final JButton shiftHint = new JButton("Преобразование: 'циклический сдвиг <<11'");
-    private final JButton xorHint = new JButton("Преобразование: 'сложение XOR'");
+    private final JButton tableHint = new JButton("Transformation: 'S-box substitution'");
+    private final JButton shiftHint = new JButton("Transformation: 'cyclic shift <<11'");
+    private final JButton xorHint = new JButton("Transformation: 'XOR addition'");
 
     private final Color colorViz_ij = Color.getHSBColor(0.068f, 0.06f, 1.f);
     private final Color colorLightRed = Color.getHSBColor(0.016f, 0.11f, 1.f);
     private final Color colorLightBlue = Color.getHSBColor(0.5f, 0.12f, 1.f);
 
     public VisualizationMagmaRound(Component owner, State state, byte[] result, String key, String block) {
-        super((Frame) SwingUtilities.getWindowAncestor(owner), "Визуализация раундовых преобразований шифра 'Магма'", false);
+        super((Frame) SwingUtilities.getWindowAncestor(owner), "Round Transformation Visualization - Magma Cipher", false);
 
 //        tree = createStateTree(state, key);
 //        tree.setScrollsOnExpand(true);
@@ -154,16 +154,16 @@ public class VisualizationMagmaRound extends JDialog {
         fieldViz27.setBackground(colorViz_ij);
 
 //        float[] hsbValues = Color.RGBtoHSB(224, 255, 255, null);
-//        float hue = hsbValues[0]; // оттенок
-//        float saturation = hsbValues[1]; // насыщенность
-//        float brightness = hsbValues[2]; // яркость
+//        float hue = hsbValues[0]; // hue
+//        float saturation = hsbValues[1]; // saturation
+//        float brightness = hsbValues[2]; // brightness
 //        System.out.println("hue: "+hue);
 //        System.out.println("saturation: "+saturation);
 //        System.out.println("brightness: "+brightness);
 
 
-//         .setBackground(Color.getHSBColor(0.016f, 0.11f, 1.f)); // красноватый
-//         .setBackground(Color.getHSBColor(0.5f, 0.12f, 1.f)); // синеватый
+//         .setBackground(Color.getHSBColor(0.016f, 0.11f, 1.f)); // reddish
+//         .setBackground(Color.getHSBColor(0.5f, 0.12f, 1.f)); // bluish
 
 
 
@@ -199,33 +199,33 @@ public class VisualizationMagmaRound extends JDialog {
         fieldAddRoundKey.setText(null);
 
         Style styleBlueARK = getStyleText(fieldAddRoundKey, Color.BLUE);
-        insertColorText(fieldAddRoundKey, styleBlueARK, "Результат:");
+        insertColorText(fieldAddRoundKey, styleBlueARK, "Result:");
         insertColorText(fieldAddRoundKey, styleBlueARK, " " + Conversions.hex(currentStart.getAfter()));
 
         currentStart = stateList.get(3);
         fieldTransform.setText(null);
         Style styleBlueT = getStyleText(fieldTransform, Color.BLUE);
-        insertColorText(fieldTransform, styleBlueT, "Результат:");
+        insertColorText(fieldTransform, styleBlueT, "Result:");
         insertColorText(fieldTransform, styleBlueT, " " + Conversions.hex(currentStart.getAfter()));
 
 
         currentStart = stateList.get(4);
         fieldShiftLeft.setText(null);
-        // TODO: костыль <<11 :(
+        // TODO: workaround for <<11 :(
         int word = Conversions.word(currentStart.getBefore());
         byte[] ee = Conversions.word(((word << 11) & 0xFFFFF800) | ((word >> 21) & 0x7FF));
         Style styleBlueSL = getStyleText(fieldShiftLeft, Color.BLUE);
-        insertColorText(fieldShiftLeft, styleBlueSL, "Результат:");
+        insertColorText(fieldShiftLeft, styleBlueSL, "Result:");
         insertColorText(fieldShiftLeft, styleBlueSL, " " + Conversions.hex(ee));
 
         currentStart = stateList.get(5);
         fieldXOR.setText(null);
 
         Style styleBlueXOR = getStyleText(fieldXOR, Color.RED);
-        insertColorText(fieldXOR, styleBlueXOR, "Результат:");
+        insertColorText(fieldXOR, styleBlueXOR, "Result:");
         insertColorText(fieldXOR, styleBlueXOR, " " + Conversions.hex(currentStart.getAfter()));
 
-        stage.setText("Раунд №1");
+        stage.setText("Round #1");
         stage.setFont(font);
         stage.setForeground(Color.RED);
 
@@ -233,28 +233,28 @@ public class VisualizationMagmaRound extends JDialog {
         firstStep = false;
         fieldRoundBeforeL.setText(null);
         Style styleRedBL = getStyleText(fieldRoundBeforeL, Color.RED);
-        insertColorText(fieldRoundBeforeL, styleRedBL, "Субблок L:");
+        insertColorText(fieldRoundBeforeL, styleRedBL, "Subblock L:");
         insertColorText(fieldRoundBeforeL, styleRedBL, " " + String.valueOf(Conversions.hex(currentStart.getBefore())).substring(0, 11));
 
         fieldRoundBeforeR.setText(null);
         Style styleRedBR = getStyleText(fieldRoundBeforeR, Color.RED);
 
-        insertColorText(fieldRoundBeforeR, styleRedBR, "Субблок R:");
+        insertColorText(fieldRoundBeforeR, styleRedBR, "Subblock R:");
         insertColorText(fieldRoundBeforeR, styleRedBR, " " + String.valueOf(Conversions.hex(currentStart.getBefore())).substring(12, 23));
 
         fieldRoundAfterL.setText(null);
         Style styleRedAL = getStyleText(fieldRoundAfterL, Color.RED);
-        insertColorText(fieldRoundAfterL, styleRedAL, "Субблок L':");
+        insertColorText(fieldRoundAfterL, styleRedAL, "Subblock L':");
         insertColorText(fieldRoundAfterL, styleRedAL, " " + String.valueOf(Conversions.hex(currentStart.getAfter())).substring(0, 11));
 
         fieldRoundAfterR.setText(null);
         Style styleRedAR = getStyleText(fieldRoundAfterR, Color.RED);
-        insertColorText(fieldRoundAfterR, styleRedAR, "Субблок R':");
+        insertColorText(fieldRoundAfterR, styleRedAR, "Subblock R':");
         insertColorText(fieldRoundAfterR, styleRedAR, " " + String.valueOf(Conversions.hex(currentStart.getAfter())).substring(12, 23));
 
         fieldRoundKey.setText(null);
         Style styleRedRK = getStyleText(fieldRoundKey, Color.RED);
-        insertColorText(fieldRoundKey, styleRedRK, "Ключ раунда:");
+        insertColorText(fieldRoundKey, styleRedRK, "Round key:");
         insertColorText(fieldRoundKey, styleRedRK, " " + String.valueOf(Conversions.hex(currentStart.getAdditional())));
         nextStep.addActionListener(e -> setCurrentIdNextStep(currentId + 1));
         nextRound.addActionListener(e -> setCurrentIdNextRound(indexRounds[roundArrIdx + 1]));
@@ -372,7 +372,7 @@ public class VisualizationMagmaRound extends JDialog {
 
     private void hintAddRoundKey() {
         String textFileName = "AddRoundKey_hint.txt";
-        String title = "Преобразование: сложение по модулю 2^32";
+        String title = "Transformation: addition modulo 2^32";
         String user = getUser();
 
         if (isWindows()) {
@@ -404,7 +404,7 @@ public class VisualizationMagmaRound extends JDialog {
 
     private void hintTable() {
         String textFileName = "Table_hint.txt";
-        String title = "Преобразование: подстановка S";
+        String title = "Transformation: S-box substitution";
         String user = getUser();
 
         if (isWindows()) {
@@ -436,7 +436,7 @@ public class VisualizationMagmaRound extends JDialog {
 
     private void hintShift() {
         String textFileName = "Shift_hint.txt";
-        String title = "Преобразование: циклический сдвиг <<11";
+        String title = "Transformation: cyclic shift <<11";
         String user = getUser();
 
         if (isWindows()) {
@@ -468,7 +468,7 @@ public class VisualizationMagmaRound extends JDialog {
 
     private void hintXOR() {
         String textFileName = "XOR_hint.txt";
-        String title = "Преобразование: сложение XOR";
+        String title = "Transformation: XOR addition";
         String user = getUser();
 
 
@@ -507,10 +507,10 @@ public class VisualizationMagmaRound extends JDialog {
 
         JOptionPane.showMessageDialog(
                 VisualizationMagmaRound.this,
-                new String[]{"В ходе последней (32-й) итерации так же, как и в остальных, преобразуется правая половина,",
-                        "после чего полученный результат пишется в левую часть исходного блока, а правая сохраняет свое значение.",
+                new String[]{"In the final (32nd) iteration, just as in all the others, the right half is transformed,",
+                        "after which the result is written to the left part of the original block, while the right part keeps its value.",
                         ""},
-                "Схема одной итерации",
+                "Diagram of a single iteration",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -621,7 +621,7 @@ public class VisualizationMagmaRound extends JDialog {
 
                 fieldViz17.setText(null);
                 Style styleRedAL = getStyleText(fieldRoundAfterL, Color.RED);
-                insertColorText(fieldRoundAfterL, styleRedAL, "Субблок L':");
+                insertColorText(fieldRoundAfterL, styleRedAL, "Subblock L':");
                 insertColorText(fieldRoundAfterL, styleRedAL, " " + roundKey2);
 
 
@@ -654,29 +654,29 @@ public class VisualizationMagmaRound extends JDialog {
                 fieldViz26.setText(null);
 
 //                fieldXOR.setText(null);
-//                fieldXOR.setText("Вычисление.");
+//                fieldXOR.setText("Calculating.");
 //                sleep(ms - 700);
 //                fieldXOR.setText(null);
-//                fieldXOR.setText("Вычисление..");
+//                fieldXOR.setText("Calculating..");
 //                sleep(ms - 700);
 //                fieldXOR.setText(null);
-//                fieldXOR.setText("Вычисление...");
+//                fieldXOR.setText("Calculating...");
 //                sleep(ms - 700);
 //                fieldXOR.setText(null);
-//                fieldXOR.setText("Вычисление.");
+//                fieldXOR.setText("Calculating.");
 //                sleep(ms - 700);
 //                fieldXOR.setText(null);
-//                fieldXOR.setText("Вычисление..");
+//                fieldXOR.setText("Calculating..");
 //                sleep(ms - 700);
 //                fieldXOR.setText(null);
-//                fieldXOR.setText("Вычисление...");
+//                fieldXOR.setText("Calculating...");
 //                sleep(ms - 700);
 //                fieldXOR.setText(null);
 //
 //                fieldViz27.setText(null);
-//                insertColorText(fieldXOR, styleBlueXOR, "Результат:");
+//                insertColorText(fieldXOR, styleBlueXOR, "Result:");
 //                insertColorText(fieldXOR, styleBlueXOR, " " + textXOR);
-//                insertColorText(fieldRoundAfterR, styleRedAL, "Субблок R':");
+//                insertColorText(fieldRoundAfterR, styleRedAL, "Subblock R':");
 //                insertColorText(fieldRoundAfterR, styleRedAL, " " + textXOR);
 //
 //                nextRound.setEnabled(true);
@@ -732,29 +732,29 @@ public class VisualizationMagmaRound extends JDialog {
                 // -----------------
 
                 fieldXOR.setText(null);
-                fieldXOR.setText("Вычисление.");
+                fieldXOR.setText("Calculating.");
                 sleep(ms - 700);
                 fieldXOR.setText(null);
-                fieldXOR.setText("Вычисление..");
+                fieldXOR.setText("Calculating..");
                 sleep(ms - 700);
                 fieldXOR.setText(null);
-                fieldXOR.setText("Вычисление...");
+                fieldXOR.setText("Calculating...");
                 sleep(ms - 700);
                 fieldXOR.setText(null);
-                fieldXOR.setText("Вычисление.");
+                fieldXOR.setText("Calculating.");
                 sleep(ms - 700);
                 fieldXOR.setText(null);
-                fieldXOR.setText("Вычисление..");
+                fieldXOR.setText("Calculating..");
                 sleep(ms - 700);
                 fieldXOR.setText(null);
-                fieldXOR.setText("Вычисление...");
+                fieldXOR.setText("Calculating...");
                 sleep(ms - 700);
                 fieldXOR.setText(null);
 
                 fieldViz27.setText(null);
-                insertColorText(fieldXOR, styleBlueXOR, "Результат:");
+                insertColorText(fieldXOR, styleBlueXOR, "Result:");
                 insertColorText(fieldXOR, styleBlueXOR, " " + textXOR);
-                insertColorText(fieldRoundAfterR, styleRedAL, "Субблок R':");
+                insertColorText(fieldRoundAfterR, styleRedAL, "Subblock R':");
                 insertColorText(fieldRoundAfterR, styleRedAL, " " + textXOR);
 
                 nextRound.setEnabled(true);
@@ -789,72 +789,72 @@ public class VisualizationMagmaRound extends JDialog {
 //                case "Add round key":
 //                    fieldAddRoundKey.setText(null);
 ////                    fieldAddRoundKey.append(
-//////                                    "(Шаг назад) Сложение по модулю\n\n\n"+
-//////                                    "Блок данных: " + String.valueOf(Conversions.hex(current.getBefore())) +
-//////                                    "\n\n---Ключ---: " + String.valueOf(Conversions.hex(current.getAdditional())) +
-////                                    "(Шаг назад) Результат: " + String.valueOf(Conversions.hex(current.getAfter()))
+//////                                    "(Step back) Addition modulo\n\n\n"+
+//////                                    "Data block: " + String.valueOf(Conversions.hex(current.getBefore())) +
+//////                                    "\n\n---Key---: " + String.valueOf(Conversions.hex(current.getAdditional())) +
+////                                    "(Step back) Result: " + String.valueOf(Conversions.hex(current.getAfter()))
 ////                    );
 //                    Style styleRedARK= getStyleText(fieldAddRoundKey, Color.RED);
 //                    Style styleBlackARK = getStyleText(fieldAddRoundKey, Color.BLACK);
-//                    insertColorText(fieldAddRoundKey, styleBlackARK, "Результат:");
+//                    insertColorText(fieldAddRoundKey, styleBlackARK, "Result:");
 //                    insertColorText(fieldAddRoundKey, styleRedARK, " "+String.valueOf(Conversions.hex(current.getAfter())));
 //                    break;
 //                case "Transform":
 //                    fieldTransform.setText(null);
 //                    Style styleRedT = getStyleText(fieldTransform, Color.RED);
 //                    Style styleBlackT = getStyleText(fieldTransform, Color.BLACK);
-//                    insertColorText(fieldTransform, styleBlackT, "Результат:");
+//                    insertColorText(fieldTransform, styleBlackT, "Result:");
 //                    insertColorText(fieldTransform, styleRedT, " "+String.valueOf(Conversions.hex(current.getAfter())));
 //                    break;
 //                case "Shift left":
 //                    fieldShiftLeft.setText(null);
 //                    Style styleRedSL = getStyleText(fieldShiftLeft, Color.RED);
 //                    Style styleBlackSL = getStyleText(fieldShiftLeft, Color.BLACK);
-//                    insertColorText(fieldShiftLeft, styleBlackSL, "Результат:");
+//                    insertColorText(fieldShiftLeft, styleBlackSL, "Result:");
 //                    insertColorText(fieldShiftLeft, styleRedSL, " "+String.valueOf(Conversions.hex(current.getAfter())));
 //                    break;
 //                case "XOR with round key":
 //                    fieldXOR.setText(null);
 //                    Style styleBlackXOR = getStyleText(fieldXOR, Color.BLACK);
 //                    Style styleRedXOR = getStyleText(fieldXOR, Color.RED);
-//                    insertColorText(fieldXOR, styleBlackXOR, "Результат:");
+//                    insertColorText(fieldXOR, styleBlackXOR, "Result:");
 //                    insertColorText(fieldXOR, styleRedXOR, " "+String.valueOf(Conversions.hex(current.getAfter())));
 //                    break;
 //
 //            }
 //
 //            if (current.getName().equals("Round "+ (roundCounter-2))){
-//                stage.setText("Раунд №"+ (roundCounter-2));
+//                stage.setText("Round #"+ (roundCounter-2));
 //                roundCounter--;
 //
 //                fieldRoundKey.setText(null);
 //                Style styleBlackRK = getStyleText(fieldRoundKey, Color.BLACK);
 //                Style styleBlueRK = getStyleText(fieldRoundKey, Color.BLUE);
-//                insertColorText(fieldRoundKey, styleBlackRK, "Ключ раунда:");
+//                insertColorText(fieldRoundKey, styleBlackRK, "Round key:");
 //                insertColorText(fieldRoundKey, styleBlueRK, " "+String.valueOf(Conversions.hex(current.getAdditional())));
 //
 //                fieldRoundBeforeL.setText(null);
 //                Style styleRedBL = getStyleText(fieldRoundBeforeL, Color.RED);
 //                Style styleBlackBL = getStyleText(fieldRoundBeforeL, Color.BLACK);
-//                insertColorText(fieldRoundBeforeL, styleBlackBL, "Субблок L:");
+//                insertColorText(fieldRoundBeforeL, styleBlackBL, "Subblock L:");
 //                insertColorText(fieldRoundBeforeL, styleRedBL, " "+String.valueOf(Conversions.hex(current.getBefore())).substring(0,11));
 //                fieldRoundBeforeR.setText(null);
 //                Style styleBlackBR = getStyleText(fieldRoundBeforeR, Color.BLACK);
 //                Style styleRedBR = getStyleText(fieldRoundBeforeR, Color.RED);
 //
-//                insertColorText(fieldRoundBeforeR, styleBlackBR, "Субблок R:");
+//                insertColorText(fieldRoundBeforeR, styleBlackBR, "Subblock R:");
 //                insertColorText(fieldRoundBeforeR, styleRedBR, " "+String.valueOf(Conversions.hex(current.getBefore())).substring(12,23));
 //
 //                fieldRoundAfterL.setText(null);
 //                Style styleGreenAL = getStyleText(fieldRoundAfterL, Color.GREEN);
 //                Style styleBlackAL = getStyleText(fieldRoundAfterL, Color.BLACK);
-//                insertColorText(fieldRoundAfterL, styleBlackAL, "Субблок L':");
+//                insertColorText(fieldRoundAfterL, styleBlackAL, "Subblock L':");
 //                insertColorText(fieldRoundAfterL, styleGreenAL, " "+String.valueOf(Conversions.hex(current.getBefore())).substring(12,23));
 //
 //                fieldRoundAfterR.setText(null);
 //                Style styleGreenAR = getStyleText(fieldRoundAfterR, Color.GREEN);
 //                Style styleBlackAR = getStyleText(fieldRoundAfterR, Color.BLACK);
-//                insertColorText(fieldRoundAfterR, styleBlackAR, "Субблок R':");
+//                insertColorText(fieldRoundAfterR, styleBlackAR, "Subblock R':");
 //                insertColorText(fieldRoundAfterR, styleGreenAR, " "+String.valueOf(Conversions.hex(current.getAfter())).substring(12,23));
 //            }
 //
@@ -887,7 +887,7 @@ public class VisualizationMagmaRound extends JDialog {
                 case "Add round key":
                     fieldAddRoundKey.setText(null);
                     Style styleBlueARK = getStyleText(fieldAddRoundKey, Color.BLUE);
-                    insertColorText(fieldAddRoundKey, styleBlueARK, "Результат:");
+                    insertColorText(fieldAddRoundKey, styleBlueARK, "Result:");
                     insertColorText(fieldAddRoundKey, styleBlueARK, " " + Conversions.hex(current.getAfter()));
                     textAddRoundKey = String.valueOf(Conversions.hex(current.getAfter()));
                     nextStep.setEnabled(true);
@@ -895,7 +895,7 @@ public class VisualizationMagmaRound extends JDialog {
                 case "Transform":
                     fieldTransform.setText(null);
                     Style styleBlueT = getStyleText(fieldTransform, Color.BLUE);
-                    insertColorText(fieldTransform, styleBlueT, "Результат:");
+                    insertColorText(fieldTransform, styleBlueT, "Result:");
                     insertColorText(fieldTransform, styleBlueT, " " + Conversions.hex(current.getAfter()));
                     textTransform = String.valueOf(Conversions.hex(current.getAfter()));
                     break;
@@ -906,7 +906,7 @@ public class VisualizationMagmaRound extends JDialog {
                         byte[] e = Conversions.word(((word << 11) & 0xFFFFF800) | ((word >> 21) & 0x7FF));
                         fieldShiftLeft.setText(null);
                         Style styleBlueSL = getStyleText(fieldShiftLeft, Color.BLUE);
-                        insertColorText(fieldShiftLeft, styleBlueSL, "Результат:");
+                        insertColorText(fieldShiftLeft, styleBlueSL, "Result:");
                         insertColorText(fieldShiftLeft, styleBlueSL, " " + Conversions.hex(e));
                         textShiftLeft = String.valueOf(Conversions.hex(e));
 //                        checkDoubleClick = false;
@@ -919,7 +919,7 @@ public class VisualizationMagmaRound extends JDialog {
                         int word = Conversions.word(current.getBefore());
                         byte[] e = Conversions.word(((word << 11) & 0xFFFFF800) | ((word >> 21) & 0x7FF));
                         Style styleBlueSL = getStyleText(fieldShiftLeft, Color.BLUE);
-                        insertColorText(fieldShiftLeft, styleBlueSL, "Результат:");
+                        insertColorText(fieldShiftLeft, styleBlueSL, "Result:");
                         insertColorText(fieldShiftLeft, styleBlueSL, " " + Conversions.hex(e));
                         textShiftLeft = String.valueOf(Conversions.hex(current.getAfter()));
 //                        checkDoubleClick = false;
@@ -933,7 +933,7 @@ public class VisualizationMagmaRound extends JDialog {
                         System.out.println("DEBUG <<11 (after): " + Conversions.hex(current.getAfter()));
                         fieldShiftLeft.setText(null);
                         Style styleBlueSL = getStyleText(fieldShiftLeft, Color.BLUE);
-                        insertColorText(fieldShiftLeft, styleBlueSL, "Результат:");
+                        insertColorText(fieldShiftLeft, styleBlueSL, "Result:");
                         insertColorText(fieldShiftLeft, styleBlueSL, " " + Conversions.hex(e));
                         textShiftLeft = String.valueOf(Conversions.hex(current.getAfter()));
                     }
@@ -957,7 +957,7 @@ public class VisualizationMagmaRound extends JDialog {
                     }
                     else {
                         System.out.println("debug id subblock: " + id);
-                        insertColorText(fieldXOR, styleBlueXOR, "Результат:");
+                        insertColorText(fieldXOR, styleBlueXOR, "Result:");
                         insertColorText(fieldXOR, styleBlueXOR, " " + Conversions.hex(current.getAfter()));
                         nextStep.setEnabled(false);
                         if (id != 5) {
@@ -965,11 +965,11 @@ public class VisualizationMagmaRound extends JDialog {
                             fieldRoundAfterL.setText(null);
 
                             Style styleRedAL = getStyleText(fieldRoundAfterL, Color.RED);
-                            insertColorText(fieldRoundAfterL, styleRedAL, "Субблок L':");
+                            insertColorText(fieldRoundAfterL, styleRedAL, "Subblock L':");
                             insertColorText(fieldRoundAfterL, styleRedAL, " " + valueRoundAfterL);
 
                             Style styleRedAR = getStyleText(fieldRoundAfterR, Color.RED);
-                            insertColorText(fieldRoundAfterR, styleRedAR, "Субблок R':");
+                            insertColorText(fieldRoundAfterR, styleRedAR, "Subblock R':");
                             insertColorText(fieldRoundAfterR, styleRedAR, " " + valueRoundAfterR);
                         }
 
@@ -978,12 +978,12 @@ public class VisualizationMagmaRound extends JDialog {
 
             }
             if (current.getName().equals("Round " + roundCounter)) {
-                stage.setText("Раунд №" + roundCounter);
+                stage.setText("Round #" + roundCounter);
                 roundCounter++;
 //                System.out.println("DEBUG id to ARR: " + id);
                 fieldRoundKey.setText(null);
                 Style styleRedRK = getStyleText(fieldRoundKey, Color.RED);
-                insertColorText(fieldRoundKey, styleRedRK, "Ключ раунда:");
+                insertColorText(fieldRoundKey, styleRedRK, "Round key:");
                 insertColorText(fieldRoundKey, styleRedRK, " " + String.valueOf(Conversions.hex(current.getAdditional())));
                 fieldRoundBeforeL.setText(null);
 
@@ -993,22 +993,22 @@ public class VisualizationMagmaRound extends JDialog {
                 valueRoundAfterL = String.valueOf(Conversions.hex(current.getAfter())).substring(0, 11);
                 valueRoundAfterR = String.valueOf(Conversions.hex(current.getAfter())).substring(12, 23);
                 Style styleRedBL = getStyleText(fieldRoundBeforeL, Color.RED);
-                insertColorText(fieldRoundBeforeL, styleRedBL, "Субблок L:");
+                insertColorText(fieldRoundBeforeL, styleRedBL, "Subblock L:");
                 insertColorText(fieldRoundBeforeL, styleRedBL, " " + String.valueOf(Conversions.hex(current.getBefore())).substring(0, 11));
                 fieldRoundBeforeR.setText(null);
 
                 Style styleRedBR = getStyleText(fieldRoundBeforeR, Color.RED);
-                insertColorText(fieldRoundBeforeR, styleRedBR, "Субблок R:");
+                insertColorText(fieldRoundBeforeR, styleRedBR, "Subblock R:");
                 insertColorText(fieldRoundBeforeR, styleRedBR, " " + String.valueOf(Conversions.hex(current.getBefore())).substring(12, 23));
 //                fieldRoundAfterL.setText(null);
 //
 //                Style styleRedAL = getStyleText(fieldRoundAfterL, Color.RED);
-//                insertColorText(fieldRoundAfterL, styleRedAL, "Субблок L':");
+//                insertColorText(fieldRoundAfterL, styleRedAL, "Subblock L':");
 //                insertColorText(fieldRoundAfterL, styleRedAL, " " + String.valueOf(Conversions.hex(current.getAfter())).substring(0, 11));
 //                fieldRoundAfterR.setText(null);
 //
 //                Style styleRedAR = getStyleText(fieldRoundAfterR, Color.RED);
-//                insertColorText(fieldRoundAfterR, styleRedAR, "Субблок R':");
+//                insertColorText(fieldRoundAfterR, styleRedAR, "Subblock R':");
 //                insertColorText(fieldRoundAfterR, styleRedAR, " " + String.valueOf(Conversions.hex(current.getAfter())).substring(12, 23));
 
             }
@@ -1074,7 +1074,7 @@ public class VisualizationMagmaRound extends JDialog {
 
                 fieldRoundAfterL.setText(null);
                 fieldRoundAfterR.setText(null);
-                stage.setText("Раунд №" + (roundCounter + 1));
+                stage.setText("Round #" + (roundCounter + 1));
                 roundCounter++;
                 roundArrIdx++;
                 nextRound.setEnabled(true);
@@ -1085,11 +1085,11 @@ public class VisualizationMagmaRound extends JDialog {
 
                 fieldRoundKey.setText(null);
                 Style styleRedRK = getStyleText(fieldRoundKey, Color.RED);
-                insertColorText(fieldRoundKey, styleRedRK, "Ключ раунда:");
+                insertColorText(fieldRoundKey, styleRedRK, "Round key:");
                 insertColorText(fieldRoundKey, styleRedRK, " " + String.valueOf(Conversions.hex(current.getAdditional())));
                 fieldRoundBeforeL.setText(null);
                 Style styleRedBL = getStyleText(fieldRoundBeforeL, Color.RED);
-                insertColorText(fieldRoundBeforeL, styleRedBL, "Субблок L:");
+                insertColorText(fieldRoundBeforeL, styleRedBL, "Subblock L:");
                 insertColorText(fieldRoundBeforeL, styleRedBL, " " + String.valueOf(Conversions.hex(current.getBefore())).substring(0, 11));
                 fieldRoundBeforeR.setText(null);
                 Style styleRedBR = getStyleText(fieldRoundBeforeR, Color.RED);
@@ -1100,17 +1100,17 @@ public class VisualizationMagmaRound extends JDialog {
                 valueRoundAfterL = String.valueOf(Conversions.hex(current.getAfter())).substring(0, 11);
                 valueRoundAfterR = String.valueOf(Conversions.hex(current.getAfter())).substring(12, 23);
 
-                insertColorText(fieldRoundBeforeR, styleRedBR, "Субблок R:");
+                insertColorText(fieldRoundBeforeR, styleRedBR, "Subblock R:");
                 insertColorText(fieldRoundBeforeR, styleRedBR, " " + String.valueOf(Conversions.hex(current.getBefore())).substring(12, 23));
 //                fieldRoundAfterL.setText(null);
 //
 //
 //                Style styleRedAL = getStyleText(fieldRoundAfterL, Color.RED);
-//                insertColorText(fieldRoundAfterL, styleRedAL, "Субблок L':");
+//                insertColorText(fieldRoundAfterL, styleRedAL, "Subblock L':");
 //                insertColorText(fieldRoundAfterL, styleRedAL, " " + String.valueOf(Conversions.hex(current.getAfter())).substring(0, 11));
 //                fieldRoundAfterR.setText(null);
 //                Style styleRedAR = getStyleText(fieldRoundAfterR, Color.RED);
-//                insertColorText(fieldRoundAfterR, styleRedAR, "Субблок R':");
+//                insertColorText(fieldRoundAfterR, styleRedAR, "Subblock R':");
 //                insertColorText(fieldRoundAfterR, styleRedAR, " " + String.valueOf(Conversions.hex(current.getAfter())).substring(12, 23));
 
 
@@ -1174,7 +1174,7 @@ public class VisualizationMagmaRound extends JDialog {
 
                 fieldRoundAfterL.setText(null);
                 fieldRoundAfterR.setText(null);
-                stage.setText("Раунд №" + (roundCounter - 1));
+                stage.setText("Round #" + (roundCounter - 1));
                 roundCounter--;
                 roundArrIdx--;
                 nextRound.setEnabled(true);
@@ -1191,26 +1191,26 @@ public class VisualizationMagmaRound extends JDialog {
 
                 fieldRoundKey.setText(null);
                 Style styleRedRK = getStyleText(fieldRoundKey, Color.RED);
-                insertColorText(fieldRoundKey, styleRedRK, "Ключ раунда:");
+                insertColorText(fieldRoundKey, styleRedRK, "Round key:");
                 insertColorText(fieldRoundKey, styleRedRK, " " + String.valueOf(Conversions.hex(current.getAdditional())));
                 fieldRoundBeforeL.setText(null);
 
                 Style styleRedBL = getStyleText(fieldRoundBeforeL, Color.RED);
-                insertColorText(fieldRoundBeforeL, styleRedBL, "Субблок L:");
+                insertColorText(fieldRoundBeforeL, styleRedBL, "Subblock L:");
                 insertColorText(fieldRoundBeforeL, styleRedBL, " " + String.valueOf(Conversions.hex(current.getBefore())).substring(0, 11));
                 fieldRoundBeforeR.setText(null);
 
                 Style styleRedBR = getStyleText(fieldRoundBeforeR, Color.RED);
-                insertColorText(fieldRoundBeforeR, styleRedBR, "Субблок R:");
+                insertColorText(fieldRoundBeforeR, styleRedBR, "Subblock R:");
                 insertColorText(fieldRoundBeforeR, styleRedBR, " " + String.valueOf(Conversions.hex(current.getBefore())).substring(12, 23));
 //                fieldRoundAfterL.setText(null);
 //
 //                Style styleRedAL = getStyleText(fieldRoundAfterL, Color.RED);
-//                insertColorText(fieldRoundAfterL, styleRedAL, "Субблок L':");
+//                insertColorText(fieldRoundAfterL, styleRedAL, "Subblock L':");
 //                insertColorText(fieldRoundAfterL, styleRedAL, " " + String.valueOf(Conversions.hex(current.getAfter())).substring(0, 11));
 //                fieldRoundAfterR.setText(null);
 //                Style styleRedAR = getStyleText(fieldRoundAfterR, Color.RED);
-//                insertColorText(fieldRoundAfterR, styleRedAR, "Субблок R':");
+//                insertColorText(fieldRoundAfterR, styleRedAR, "Subblock R':");
 //                insertColorText(fieldRoundAfterR, styleRedAR, " " + String.valueOf(Conversions.hex(current.getAfter())).substring(12, 23));
 
 
